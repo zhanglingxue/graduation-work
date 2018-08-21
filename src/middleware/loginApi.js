@@ -1,11 +1,11 @@
 import axios from 'axios';
 
-const API_DOMAIN = 'http://xly-wkop.xiaoniangao.cn/music';
+const API_DOMAIN = 'http://xly-wkop.xiaoniangao.cn/login';
 
-const callServerApi = (endpoint, params) => new Promise((resolve, reject) => {
+const callLoginApi = params => new Promise((resolve, reject) => {
   axios({
     method: 'POST',
-    url: API_DOMAIN + endpoint,
+    url: API_DOMAIN,
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded'
     },
@@ -17,36 +17,26 @@ const callServerApi = (endpoint, params) => new Promise((resolve, reject) => {
     return reject(new Error(res.data.errMsg));
   }).catch(err => reject(err));
 });
-
-/* eslint-disable no-unused-vars */
-const array = [];
 export default store => next => action => {
-  if (!action.SERVER_API) {
+  if (!action.LOGIN_API) {
     return next(action);
   }
   const {
     type,
-    endpoint,
-    params,
-    normailzerFun,
-    success
-  } = action.SERVER_API;
+    params
+  } = action.LOGIN_API;
+
   if (typeof type !== 'string') {
     throw new Error('type shoudle be a string');
-  }
-  if (typeof endpoint !== 'string') {
-    throw new Error('endpoint shoudle be a string');
   }
   if (typeof params !== 'object') {
     throw new Error('params shoudle be a object');
   }
-
   next({
     type: `${type}_REQ`
   });
-  return callServerApi(endpoint, params)
-    .then(res => {
-      const response = typeof (normailzerFun) !== 'undefined' ? normailzerFun(res) : res;
+  return callLoginApi(params)
+    .then(response => {
       next({
         type: `${type}_SUC`,
         response

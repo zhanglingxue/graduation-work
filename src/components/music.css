@@ -1,0 +1,72 @@
+body{
+  position: fixed;
+}
+p{
+  margin: 0;
+}
+.top_bar{
+  font-family:"黑体";
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 150px;
+}
+.top_bar::after{
+  position: absolute;
+    content: '';
+    height: 1px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: #e5e5e5;
+    transform: scaleY(0.5)
+}
+.top_bar_name{
+  height:50px;
+  line-height: 50px;
+  background: black;
+  color: azure;
+  font-size: 18px;
+}
+.user_name{
+  height:50px;
+  line-height: 50px;
+  display: flex;
+  flex: 3;
+  font-size: 18px;
+}
+.user_name span{
+  flex: 1;
+}
+.myName{
+  text-align: center;
+  font-weight: bold ;
+  font-size: 20px;
+}
+.film_making{
+  text-align: left;
+  color:#f34949;  
+}
+.film_making p{
+  padding-left:10px; 
+}
+.complete{
+  text-align: right;
+  color:#f34949;
+}
+.complete p{
+  padding-right:10px;
+}
+.chance_router{
+  height:50px;
+  line-height: 50px;
+  display: flex;
+  color:#575151;
+  flex: 3;
+}
+.chance_router span{
+  flex: 1;
+  text-align: center;
+  font-size: 18px;
+}

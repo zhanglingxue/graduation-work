@@ -1,8 +1,12 @@
 import { combineReducers } from 'redux';
 import entities from './entities';
-import gameReducer from './gameReducer';
+import myMusicReducer from './myMusicReducer';
+import recommendReducer from './recommendReducer';
+import loginReducer from './loginReducer';
 
 export default combineReducers({
   entities,
-  gameReducer
+  myMusicReducer,
+  recommendReducer,
+  loginReducer
 });

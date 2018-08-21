@@ -1,37 +1,45 @@
+import { normalize } from 'normalizr';
 import * as ActionTypes from '../const/ActionTypes';
+import * as schemes from '../schema';
 
-function fetchResart() {
+function fetchLogin(mid) {
   return {
-    type: ActionTypes.FEFRESH_DATA
+    LOGIN_API: {
+      type: ActionTypes.FETCH_LOGIN,
+      params: {
+        mid
+      }
+    }
   };
 }
-function fetchCanculNum() {
+function fetchMyMusicList(token) {
   return {
-    type: ActionTypes.CANCUL_LEFT_NUM
+    SERVER_API: {
+      type: ActionTypes.FETCH_MY_MUSIC_LIST,
+      endpoint: '/my_list',
+      params: {
+        token
+      },
+      normailzerFun: response => normalize(response.list, schemes.LIST)
+    }
   };
 }
-function fetchRightCanculNum() {
+function fetchRecommendMusicList(token) {
   return {
-    type: ActionTypes.CANCUL_RIGHT_NUM
+    SERVER_API: {
+      type: ActionTypes.FETCH_RECOMMEND_MUSIC_LIST,
+      endpoint: '/recommend_list',
+      params: {
+        token
+      },
+      normailzerFun: response => normalize(response.list, schemes.LIST)
+    }
   };
 }
 
-function fetchTopCanculNum() {
-  return {
-    type: ActionTypes.CANCUL_TOP_NUM
-  };
-}
-
-function fetchBottomCanculNum() {
-  return {
-    type: ActionTypes.CANCUL_BOTTOM_NUM
-  };
-}
 
 export {
-  fetchResart,
-  fetchCanculNum,
-  fetchRightCanculNum,
-  fetchTopCanculNum,
-  fetchBottomCanculNum
+  fetchLogin,
+  fetchMyMusicList,
+  fetchRecommendMusicList
 };
