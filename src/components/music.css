@@ -193,7 +193,7 @@ p,h1,h2,h3{
 .active{
   color:gray;
 }
-.button_style img{
+.button_icon{
   width:20px;
   height:20px;
   margin: 5px;

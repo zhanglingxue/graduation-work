@@ -11,21 +11,17 @@ export default class MusicContent extends React.Component {
     const {
       state,
       allState,
-      onChanceListItem
+      onChanceListItem,
+      onChangeRandom
     } = this.props;
     return (
       <div>
-        <div>
-          <MyMusicList
-            allState={allState}
-            state={state}
-            onChanceListItem={onChanceListItem}
-          />
-          {/* <RecommentLst
-            allState={allState}
-            state={state}
-          /> */}
-        </div>
+        <MyMusicList
+          allState={allState}
+          state={state}
+          onChanceListItem={onChanceListItem}
+          onChangeRandom={onChangeRandom}
+        />
         <BottomButton
           allState={allState}
           state={state}

@@ -11,7 +11,8 @@ class MyMusic extends React.Component {
     checkbox: false,
     checkArray: [],
     radioArray: [],
-    recomCheck: []
+    recomCheck: [], // 将推荐音乐med作为判断条件，划分button不同状态
+    random: false
   };
   onSelectRadio = () => {
     const { entities } = this.props;
@@ -70,7 +71,7 @@ class MyMusic extends React.Component {
     }
     return 'radio';
   }
-  onChanceListItem = idx => {
+  handleChanceListItem = idx => {
     const { entities } = this.props;
     if (this.state.checkbox) {
       const newArray = this.state.checkArray.slice();
@@ -102,17 +103,25 @@ class MyMusic extends React.Component {
       if (entities[idx].med === undefined) {
         arr.push(idx);
         this.setState({
-          recomCheck: arr
+          recomCheck: arr,
+          random: false
         });
       } else {
         this.setState({
-          recomCheck: []
+          recomCheck: [],
+          random: false
         });
       }
       this.setState({
         radioArray: radioarray
       });
     }
+  }
+  handleChangeRandom = () => {
+    this.setState({
+      random: true,
+      radioArray: []
+    });
   }
   render() {
     return (
@@ -130,7 +139,8 @@ class MyMusic extends React.Component {
         <MusicContent
           allState={this.state}
           state={this.props}
-          onChanceListItem={this.onChanceListItem}
+          onChanceListItem={this.handleChanceListItem}
+          onChangeRandom={this.handleChangeRandom}
         />
       </div>
     );

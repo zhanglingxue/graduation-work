@@ -15,27 +15,6 @@ const button_delete1 = require('../../images/button_delete_gray.png');
 
 export default class BottomButton extends React.Component {
   state = {
-    // data: [{
-    //   word: '播放',
-    //   icon: new_play,
-    //   icon_gray: new_play1
-    // }, {
-    //   word: '重命名',
-    //   icon: rename_red,
-    //   icon_gray: rename_red1
-    // }, {
-    //   word: '选择片段',
-    //   icon: button_cut,
-    //   icon_gray: button_cut1
-    // }, {
-    //   word: '送给朋友',
-    //   icon: button_share,
-    //   icon_gray: button_share1
-    // }, {
-    //   word: '删除',
-    //   icon: button_delete,
-    //   icon_gray: button_delete1
-    // }],
     showDialog: false,
     buttonName: ''
   };
@@ -57,7 +36,7 @@ export default class BottomButton extends React.Component {
           <div className="dialog_class">您还没有选择音乐哦!</div>
         );
       }
-    }
+    } else return null;
   }
   onshowButtonState = name => {
     const { allState } = this.props;
@@ -68,20 +47,7 @@ export default class BottomButton extends React.Component {
       });
     }
   }
-  onChangeClassName = () => {
-    const { allState } = this.props;
-    if (allState.checkbox) {
-      return 'button_style active';
-    }
-    return 'button_style';
-  }
-  // showImgBackground = item => {
-  //   const { allState } = this.props;
-  //   if (allState.checkbox) {
-  //     return <img src={item.icon_gray} />;
-  //   }
-  //   return <img src={item.icon} />;
-  // }
+
   onPlayClick = () => {
     this.setState({
       showDialog: true,
@@ -112,54 +78,142 @@ export default class BottomButton extends React.Component {
       buttonName: '删除'
     });
   }
+
+  showButtonPlay = () => {
+    const { allState } = this.props;
+    if (allState.random || allState.checkbox) {
+      return (
+        <div>
+          <img src={new_play1} className="button_icon" />
+          <div className="button_style active">播放</div>
+        </div>
+      );
+    }
+    return (
+      <div>
+        <img src={new_play} className="button_icon" />
+        <div className="button_style">播放</div>
+      </div>
+    );
+  }
+  showButtonRename = () => {
+    const { allState, state } = this.props;
+    if (allState.radio) {
+      if (allState.recomCheck.length === 0
+        && allState.radioArray.length !== 0
+      ) {
+        const plp = allState.radioArray[0];
+        if (state.entities[plp].plp === undefined) {
+          return (
+            <div>
+              <img src={rename_red1} className="button_icon" />
+              <div className="button_style active">重命名</div>
+            </div>
+          );
+        }
+      } else if (allState.random || allState.recomCheck.length !== 0) {
+        return (
+          <div>
+            <img src={rename_red1} className="button_icon" />
+            <div className="button_style active">重命名</div>
+          </div>
+        );
+      }
+    } else if (allState.checkbox) {
+      return (
+        <div>
+          <img src={rename_red1} className="button_icon" />
+          <div className="button_style active">重命名</div>
+        </div>
+      );
+    }
+    return (
+      <div>
+        <img src={rename_red} className="button_icon" />
+        <div className="button_style">重命名</div>
+      </div>
+    );
+  }
+  showButtonCut = () => {
+    const { allState } = this.props;
+    if (allState.random
+      || (allState.radio && allState.recomCheck.length !== 0)
+      || allState.checkbox
+    ) {
+      return (
+        <div>
+          <img src={button_cut1} className="button_icon" />
+          <div className="button_style active">选择片段</div>
+        </div>
+      );
+    }
+    return (
+      <div>
+        <img src={button_cut} className="button_icon" />
+        <div className="button_style">选择片段</div>
+      </div>
+    );
+  }
+  showButtonShare = () => {
+    const { allState } = this.props;
+    if (allState.random
+      || (allState.radio && allState.recomCheck.length !== 0)
+      || allState.checkbox
+    ) {
+      return (
+        <div>
+          <img src={button_share1} className="button_icon" />
+          <div className="button_style active">送给朋友</div>
+        </div>
+      );
+    }
+    return (
+      <div>
+        <img src={button_share} className="button_icon" />
+        <div className="button_style">送给朋友</div>
+      </div>
+    );
+  }
+  showButtonDelete = () => {
+    const { allState } = this.props;
+    if (allState.random
+      || (allState.radio && allState.recomCheck.length !== 0)
+      || (allState.checkbox && allState.checkArray.length === 0)
+      || (allState.checkbox && allState.recomCheck.length !== 0)
+    ) {
+      return (
+        <div>
+          <img src={button_delete1} className="button_icon" />
+          <div className="button_style active">删除</div>
+        </div>
+      );
+    }
+    return (
+      <div>
+        <img src={button_delete} className="button_icon" />
+        <div className="button_style">删除</div>
+      </div>
+    );
+  }
   render() {
     return (
       <div className="bottom-button">
-        {/* {
-          this.state.data.map(item => (
-            <div className="button_div" onClick={this.onshowButtonState.bind(this, item.word)}>
-              <div className="button_style">
-                {
-                  this.showImgBackground(item)
-                }
-              </div>
-              <div className={this.onChangeClassName()}>{item.word}</div>
-            </div>
-          ))
-        } */}
         <div className="button_div" onClick={this.onPlayClick}>
-          <div className="button_style">
-            <img src={new_play} />
-          </div>
-          <div className={this.onChangeClassName()}>播放</div>
+          {this.showButtonPlay()}
         </div>
         <div className="button_div" onClick={this.onRenameClick}>
-          <div className="button_style">
-            <img src={rename_red} />
-          </div>
-          <div className={this.onChangeClassName()}>重命名</div>
+          {this.showButtonRename()}
         </div>
         <div className="button_div" onClick={this.onCutClick}>
-          <div className="button_style">
-            <img src={button_cut} />
-          </div>
-          <div className={this.onChangeClassName()}>选择片段</div>
+          {this.showButtonCut()}
         </div>
         <div className="button_div" onClick={this.onShareClick}>
-          <div className="button_style">
-            <img src={button_share} />
-          </div>
-          <div className={this.onChangeClassName()}>送给朋友</div>
+          {this.showButtonShare()}
         </div>
         <div className="button_div" onClick={this.onDeleteClick}>
-          <div className="button_style">
-            <img src={button_delete} />
-          </div>
-          <div className={this.onChangeClassName()}>删除</div>
+          {this.showButtonDelete()}
         </div>
-        {
-          this.onShowTips()
-        }
+        {this.onShowTips()}
       </div>
     );
   }

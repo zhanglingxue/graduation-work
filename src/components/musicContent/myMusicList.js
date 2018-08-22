@@ -30,17 +30,25 @@ export default class MyMsicList extends React.Component {
         );
       }
       return (
-        <span className="chance_dot chance_dot_show">{index+1}</span>
+        <span className="chance_dot chance_dot_show">{index + 1}</span>
+      );
+    }
+  }
+  onShowContentRandom = () => {
+    const { allState } = this.props;
+    if (allState.radio && allState.random) {
+      return (
+        <img src={iconMark} className="img_opac_show" />
       );
     }
   }
   showRandomMusic = () => {
-    const { allState } = this.props;
-    if (allState.radio && !allState.checkbox) {
+    const { allState, onChangeRandom } = this.props;
+    if (allState.radio) {
       return (
-        <div className="myMusic_list">
+        <div className="myMusic_list" onClick={onChangeRandom}>
           <div className="selectStyle">
-            {this.onShowContent()}
+            {this.onShowContentRandom()}
           </div>
           <p>随机音乐</p>
         </div>
