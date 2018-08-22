@@ -8,6 +8,10 @@ function fetchLogin(mid) {
       type: ActionTypes.FETCH_LOGIN,
       params: {
         mid
+      },
+      success: res => {
+        this.fetchMyMusicList(res.token);
+        this.fetchRecommendMusicList(res.token);
       }
     }
   };

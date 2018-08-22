@@ -23,9 +23,9 @@ export default store => next => action => {
   }
   const {
     type,
-    params
+    params,
+    success
   } = action.LOGIN_API;
-
   if (typeof type !== 'string') {
     throw new Error('type shoudle be a string');
   }
@@ -41,6 +41,7 @@ export default store => next => action => {
         type: `${type}_SUC`,
         response
       });
+      success(response);
     }).catch(err => {
       next({
         type: `${type}_FAI`,

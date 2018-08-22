@@ -1,9 +1,9 @@
 import React from 'react';
 import { Route, IndexRoute } from 'react-router';
 import App from './App';
-import MyMusic from './containers/topBar/myMusic';
-import SearchMusic from './containers/topBar/searchMusic';
-import UploadMusic from './containers/topBar/uploadMusic';
+import MyMusic from './containers/routerChildren/myMusic';
+import SearchMusic from './containers/routerChildren/searchMusic';
+import UploadMusic from './containers/routerChildren/uploadMusic';
 
 const AppRoutes = () => (
   <Route path="/" component={App}>

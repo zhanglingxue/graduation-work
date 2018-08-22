@@ -8,12 +8,9 @@ import '../components/music.css';
 class GraduationWork extends React.Component {
   state = {
   }
-  componentWillMount = () => {
-    const { graduactions, loginReducer } = this.props;
+  componentDidMount = () => {
+    const { graduactions } = this.props;
     graduactions.fetchLogin(115);
-    const token = loginReducer.res.token;
-    graduactions.fetchMyMusicList('test91203');
-    graduactions.fetchRecommendMusicList('test91203');
   }
   onMyMusicClick = () => {
     browserHistory.push('/');

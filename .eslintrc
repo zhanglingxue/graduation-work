@@ -49,6 +49,7 @@
     "no-plusplus": ["off", "nerver"],
     "no-console": ["off", "nerver"],
     "prefer-destructuring":["off", "nerver"],
-    "array-callback-return":["off", "nerver"]
+    "array-callback-return":["off", "nerver"],
+    "react/jsx-no-bind":["off", "nerver"]
   }
 }
