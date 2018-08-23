@@ -10,6 +10,14 @@ export default function todoList(state = [], action) {
         ...result
       ];
     }
+    case ActionTypes.FETCH_DELETE_MUSIC: {
+      const newState = [...state];
+      for (let i = 0; i < action.array.length; i++) {
+        const index = newState.indexOf(action.array[i]);
+        newState.splice(index, 1);
+      }
+      return newState;
+    }
     default: {
       return state;
     }

@@ -9,36 +9,21 @@ export default class MyMsicList extends React.Component {
   onShowContent = idx => {
     const { allState } = this.props;
     if (allState.radio) {
-      if (allState.radioArray.length !== 0) {
-        if (idx !== allState.radioArray[0]) {
-          return (
-            <img src={iconMark} className="img_opac" />
-          );
-        }
-        return (
-          <img src={iconMark} className="img_opac_show" />
-        );
+      if (allState.array.length !== 0 && idx === allState.array[0]) {
+        return <img src={iconMark} className="img_opac_show" />;
       }
-      return (
-        <img src={iconMark} className="img_opac" />
-      );
+      return <img src={iconMark} className="img_opac" />;
     }
-    const index = allState.checkArray.indexOf(idx);
+    const index = allState.array.indexOf(idx);
     if (index === -1) {
-      return (
-        <span className="chance_dot" />
-      );
+      return <span className="chance_dot" />;
     }
-    return (
-      <span className="chance_dot chance_dot_show">{index + 1}</span>
-    );
+    return <span className="chance_dot chance_dot_show">{index + 1}</span>;
   }
   onShowContentRandom = () => {
     const { allState } = this.props;
     if (allState.radio && allState.random) {
-      return (
-        <img src={iconMark} className="img_opac_show" />
-      );
+      return <img src={iconMark} className="img_opac_show" />;
     }
     return <img src={iconMark} className="img_opac" />;
   }
@@ -80,9 +65,7 @@ export default class MyMsicList extends React.Component {
         <div className="show_list">
           <h2>推荐音乐</h2>
         </div>
-        {
-          this.showRandomMusic()
-        }
+        { this.showRandomMusic() }
         {
           recomment.map(item => (
             <div className="myMusic_list" onClick={onChanceListItem.bind(this, item)}>

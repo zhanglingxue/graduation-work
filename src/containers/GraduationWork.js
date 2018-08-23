@@ -8,6 +8,8 @@ import UploadMusic from '../components/tabsChildren/uploadMusic';
 import '../components/music.css';
 import './GraduationWork.css';
 
+const icon_back = require('../images/return.png');
+
 class GraduationWork extends React.Component {
   state = {
     myMusic: true,
@@ -47,38 +49,8 @@ class GraduationWork extends React.Component {
     }
     return <UploadMusic state={this.props} />;
   }
-  showMyMusicClass = () => {
-    if (this.state.myMusic) {
-      return (
-        <div>
-          <div className="tab_red">我的音乐</div>
-          <div className="tab_bottom_red" />
-        </div>
-      );
-    }
-    return <div>我的音乐</div>;
-  }
-  showSearchMusicClass = () => {
-    if (this.state.searchMusic) {
-      return (
-        <div>
-          <div className="tab_red">搜索音乐</div>
-          <div className="tab_bottom_red" />
-        </div>
-      );
-    }
-    return <div>搜索音乐</div>;
-  }
-  showUploadMusicClass = () => {
-    if (this.state.uploadMusic) {
-      return (
-        <div>
-          <div className="tab_red">上传音乐</div>
-          <div className="tab_bottom_red" />
-        </div>
-      );
-    }
-    return <div>上传音乐</div>;
+  goBack = () => {
+    window.alert('go back!!');
   }
   render() {
     return (
@@ -86,8 +58,9 @@ class GraduationWork extends React.Component {
         <div className="top_bar">
           <div className="top_bar_name">小年糕+</div>
           <div className="user_name">
-            <span className="film_making">
-              <p>影集制作</p>
+            <span className="film_making" onClick={this.goBack}>
+              <span><img src={icon_back} /></span>
+              <span><p>影集制作</p></span>
             </span>
             <span className="myName">
               <p>{this.props.loginReducer.res.nick}</p>
@@ -98,13 +71,34 @@ class GraduationWork extends React.Component {
           </div>
           <div className="chance_router">
             <span onClick={this.onMyMusicClick}>
-              {this.showMyMusicClass()}
+              {
+                this.state.myMusic ?
+                  <div>
+                    <div className="tab_red">我的音乐</div>
+                    <div className="tab_bottom_red" />
+                  </div> :
+                  <div>我的音乐</div>
+              }
             </span>
             <span onClick={this.onSearchMusicClick}>
-              {this.showSearchMusicClass()}
+              {
+                this.state.searchMusic ?
+                  <div>
+                    <div className="tab_red">搜索音乐</div>
+                    <div className="tab_bottom_red" />
+                  </div> :
+                  <div>搜索音乐</div>
+              }
             </span>
             <span onClick={this.onUploadhMusicClick}>
-              {this.showUploadMusicClass()}
+              {
+                this.state.uploadMusic ?
+                  <div>
+                    <div className="tab_red">上传音乐</div>
+                    <div className="tab_bottom_red" />
+                  </div> :
+                  <div>上传音乐</div>
+              }
             </span>
           </div>
         </div>

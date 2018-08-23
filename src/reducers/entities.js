@@ -18,6 +18,11 @@ export default function Entities(state = {}, action) {
         ...entities
       };
     }
+    case ActionTypes.FETCH_SUBMIT_MUSIC_NAME: {
+      const newState = { ...state };
+      newState[action.id].name = action.value;
+      return newState;
+    }
     default: {
       return state;
     }

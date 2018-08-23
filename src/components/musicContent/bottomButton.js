@@ -1,227 +1,98 @@
 import React from 'react';
+import ButtonContent from './buttonContent';
+import DialogView from './Dialog';
+import MusicProgress from './musicProgress';
 import '../music.css';
-
-const new_play = require('../../images/button_new_play.png');
-const rename_red = require('../../images/button_rename_red.png');
-const button_cut = require('../../images/button_cut.png');
-const button_share = require('../../images/button_share.png');
-const button_delete = require('../../images/button_delete.png');
-
-const new_play1 = require('../../images/button_new_play_gray.png');
-const rename_red1 = require('../../images/button_rename_gray.png');
-const button_cut1 = require('../../images/button_cut_gray.png');
-const button_share1 = require('../../images/button_share_gray.png');
-const button_delete1 = require('../../images/button_delete_gray.png');
 
 export default class BottomButton extends React.Component {
   state = {
-    showDialog: false,
-    buttonName: ''
+    data: [{
+      icon_red: require('../../images/button_new_play.png'),
+      icon_gray: require('../../images/button_new_play_gray.png'),
+      name: '播放'
+    }, {
+      icon_red: require('../../images/button_rename_red.png'),
+      icon_gray: require('../../images/button_rename_gray.png'),
+      name: '重命名'
+    }, {
+      icon_red: require('../../images/button_cut.png'),
+      icon_gray: require('../../images/button_cut_gray.png'),
+      name: '选择片段'
+    }, {
+      icon_red: require('../../images/button_share.png'),
+      icon_gray: require('../../images/button_share_gray.png'),
+      name: '送给朋友'
+    }, {
+      icon_red: require('../../images/button_delete.png'),
+      icon_gray: require('../../images/button_delete_gray.png'),
+      name: '删除'
+    }]
   };
   onShowTips = () => {
-    const { allState, state } = this.props;
-    if (this.state.showDialog) {
-      console.log(allState.radio)
-      if (allState.checkbox && this.state.buttonName !== '删除') {
-        this.Timer();
-        return <div className="dialog_class">[多选]状态下不能{this.state.buttonName}哦!</div>;
+    const {
+      allState,
+      state,
+      onCloseDialog,
+      onSureDelete
+    } = this.props;
+    if (allState.showDialog) {
+      if (allState.checkbox) {
+        if (allState.buttonName === '删除') {
+          if (allState.array.length === 0) {
+            return <div className="dialog_class">您还没有选择音乐哦!</div>;
+          }
+        }
+        return <div className="dialog_class">[多选]状态下不能{allState.buttonName}哦!</div>;
       }
-      if ((allState.radio && allState.radioArray.length === 0)
-      || ((allState.checkbox && allState.checkArray.length === 0))
-      ) {
-        this.Timer();
-        return <div className="dialog_class">您还没有选择音乐哦!</div>;
-      } else if (allState.recomCheck.length !== 0) {
-        this.Timer();
-        return <div className="dialog_class">推荐音乐不能删除哦!</div>;
-      } else if (allState.radio
-        && allState.recomCheck.length === 0
-        && allState.radioArray.length !== 0
-      ) {
-        if (state.entities[allState.radioArray[0].plp !== undefined]) {
-          this.Timer();
-          return <div className="dialog_class">漂流瓶保存的音乐不能删除哦!</div>;
+      if (allState.recomCheck.length === 0
+        && allState.array.length !== 0) {
+        if (state.entities[allState.array[0]].plp === 7
+          && allState.buttonName === '重命名') {
+          return <div className="dialog_class">漂流瓶保存的音乐不能重命名哦!</div>;
+        }
+      } else if (allState.array.length === 0) {
+        return <div className="dialog_class">你还没有选择音乐哦!</div>;
+      } else if (allState.recomCheck.length !== 0
+      && allState.buttonName !== '播放') {
+        return <div className="dialog_class">推荐音乐不能{allState.buttonName}哦!</div>;
+      }
+      if (allState.array.length !== 0) {
+        if (allState.buttonName === '播放' || allState.buttonName === '选择片段') {
+          return (<MusicProgress
+            allState={allState}
+            state={state}
+            onCloseDialog={onCloseDialog}
+          />);
+        } else if (allState.buttonName === '送给朋友') {
+          window.alert(`送出${state.entities[allState.array[0]].name}音乐`);
+          onCloseDialog();
+          return null;
         }
       }
+      return (<DialogView
+        allState={allState}
+        state={state}
+        onCloseDialog={onCloseDialog}
+        onSureDelete={onSureDelete}
+      />);
     }
     return null;
   }
-  onPlayClick = () => {
-    this.setState({
-      showDialog: true,
-      buttonName: '播放'
-    });
-  }
-  onRenameClick = () => {
-    this.setState({
-      showDialog: true,
-      buttonName: '重命名'
-    });
-  }
-  onCutClick = () => {
-    this.setState({
-      showDialog: true,
-      buttonName: '选择片段'
-    });
-  }
-  onShareClick = () => {
-    this.setState({
-      showDialog: true,
-      buttonName: '送给朋友'
-    });
-  }
-  onDeleteClick = () => {
-    this.setState({
-      showDialog: true,
-      buttonName: '删除'
-    });
-  }
-  Timer = () => {
-    setTimeout(() => {
-      this.setState({
-        showDialog: false,
-        buttonName: ''
-      });
-    }, 1000);
-  }
-  showButtonPlay = () => {
-    const { allState } = this.props;
-    if (allState.random || allState.checkbox) {
-      return (
-        <div>
-          <img src={new_play1} className="button_icon" />
-          <div className="button_style active">播放</div>
-        </div>
-      );
-    }
-    return (
-      <div>
-        <img src={new_play} className="button_icon" />
-        <div className="button_style">播放</div>
-      </div>
-    );
-  }
-  showButtonRename = () => {
-    const { allState, state } = this.props;
-    if (allState.radio) {
-      if (allState.recomCheck.length === 0
-        && allState.radioArray.length !== 0
-      ) {
-        const plp = allState.radioArray[0];
-        if (state.entities[plp].plp === undefined) {
-          return (
-            <div>
-              <img src={rename_red1} className="button_icon" />
-              <div className="button_style active">重命名</div>
-            </div>
-          );
-        }
-      } else if (allState.random || allState.recomCheck.length !== 0) {
-        return (
-          <div>
-            <img src={rename_red1} className="button_icon" />
-            <div className="button_style active">重命名</div>
-          </div>
-        );
-      }
-    } else if (allState.checkbox) {
-      return (
-        <div>
-          <img src={rename_red1} className="button_icon" />
-          <div className="button_style active">重命名</div>
-        </div>
-      );
-    }
-    return (
-      <div>
-        <img src={rename_red} className="button_icon" />
-        <div className="button_style">重命名</div>
-      </div>
-    );
-  }
-  showButtonCut = () => {
-    const { allState } = this.props;
-    if (allState.random
-      || (allState.radio && allState.recomCheck.length !== 0)
-      || allState.checkbox
-    ) {
-      return (
-        <div>
-          <img src={button_cut1} className="button_icon" />
-          <div className="button_style active">选择片段</div>
-        </div>
-      );
-    }
-    return (
-      <div>
-        <img src={button_cut} className="button_icon" />
-        <div className="button_style">选择片段</div>
-      </div>
-    );
-  }
-  showButtonShare = () => {
-    const { allState } = this.props;
-    if (allState.random
-      || (allState.radio && allState.recomCheck.length !== 0)
-      || allState.checkbox
-    ) {
-      return (
-        <div>
-          <img src={button_share1} className="button_icon" />
-          <div className="button_style active">送给朋友</div>
-        </div>
-      );
-    }
-    return (
-      <div>
-        <img src={button_share} className="button_icon" />
-        <div className="button_style">送给朋友</div>
-      </div>
-    );
-  }
-  showButtonDelete = () => {
-    const { allState } = this.props;
-    if (allState.radio && (allState.random || allState.recomCheck.length !== 0)) {
-      return (
-        <div>
-          <img src={button_delete1} className="button_icon" />
-          <div className="button_style active">删除</div>
-        </div>
-      );
-    } else if (allState.checkbox && (
-      allState.checkArray.length === 0 || allState.recomCheck.length !== 0)) {
-      return (
-        <div>
-          <img src={button_delete1} className="button_icon" />
-          <div className="button_style active">删除</div>
-        </div>
-      );
-    }
-    return (
-      <div>
-        <img src={button_delete} className="button_icon" />
-        <div className="button_style">删除</div>
-      </div>
-    );
-  }
   render() {
+    const { allState, state, onshowTipBox } = this.props;
     return (
       <div className="bottom-button">
-        <div className="button_div" onClick={this.onPlayClick}>
-          {this.showButtonPlay()}
-        </div>
-        <div className="button_div" onClick={this.onRenameClick}>
-          {this.showButtonRename()}
-        </div>
-        <div className="button_div" onClick={this.onCutClick}>
-          {this.showButtonCut()}
-        </div>
-        <div className="button_div" onClick={this.onShareClick}>
-          {this.showButtonShare()}
-        </div>
-        <div className="button_div" onClick={this.onDeleteClick}>
-          {this.showButtonDelete()}
-        </div>
+        {
+          this.state.data.map(item => (
+            <div className="button_div" onClick={onshowTipBox.bind(this, item.name)}>
+              <ButtonContent
+                item={item}
+                allState={allState}
+                state={state}
+              />
+            </div>
+          ))
+        }
         {this.onShowTips()}
       </div>
     );

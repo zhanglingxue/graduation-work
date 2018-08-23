@@ -41,9 +41,23 @@ function fetchRecommendMusicList(token) {
   };
 }
 
-
+function fetchDeleteMusic(array) {
+  return {
+    type: ActionTypes.FETCH_DELETE_MUSIC,
+    array
+  };
+}
+function fetchSubmitMusicName(id, value) {
+  return {
+    type: ActionTypes.FETCH_SUBMIT_MUSIC_NAME,
+    id,
+    value
+  };
+}
 export {
   fetchLogin,
   fetchMyMusicList,
-  fetchRecommendMusicList
+  fetchRecommendMusicList,
+  fetchDeleteMusic,
+  fetchSubmitMusicName
 };

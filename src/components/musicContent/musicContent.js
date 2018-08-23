@@ -11,7 +11,10 @@ export default class MusicContent extends React.Component {
       state,
       allState,
       onChanceListItem,
-      onChangeRandom
+      onChangeRandom,
+      onshowTipBox,
+      onCloseDialog,
+      onSureDelete
     } = this.props;
     return (
       <div>
@@ -24,6 +27,9 @@ export default class MusicContent extends React.Component {
         <BottomButton
           allState={allState}
           state={state}
+          onshowTipBox={onshowTipBox}
+          onCloseDialog={onCloseDialog}
+          onSureDelete={onSureDelete}
         />
       </div>
     );
