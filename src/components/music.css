@@ -226,3 +226,25 @@ p,h1,h2,h3{
   background: #062743;
   opacity: 0.6;
 }
+.max_reminder{
+  position: fixed;
+  bottom: 100px;
+  left:40px;
+  right:40px;
+  height:50px;
+  color: #e0e0e0;
+  text-align: center;
+  line-height: 50px;
+  background: #062743;
+  opacity: 0.6;
+}
+.tab_red{
+  color:#ff2064;
+  height:45px;
+}
+.tab_bottom_red{
+  height:5px;
+  width: 50%;
+  margin-left: 25%;
+  background: #ff2064;
+}

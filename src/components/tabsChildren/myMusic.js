@@ -1,26 +1,24 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import * as ActionTypes from '../../actions';
-import MusicContent from '../../components/musicContent/musicContent';
+import MusicContent from '../musicContent/musicContent';
 import '../../components/music.css';
 
-class MyMusic extends React.Component {
+export default class MyMusic extends React.Component {
   state = {
     radio: true,
     checkbox: false,
     checkArray: [],
     radioArray: [],
     recomCheck: [], // 将推荐音乐med作为判断条件，划分button不同状态
-    random: false
+    random: true, // 默认单选页面选中随机音乐
+    chanceOver: false
   };
   onSelectRadio = () => {
-    const { entities } = this.props;
+    const { state } = this.props;
     if (this.state.checkArray.length !== 0) {
       const array = this.state.checkArray.slice();
       const newArray = [];
       newArray.push(array[0]);
-      if (entities[array[0]].med === undefined) {
+      if (state.entities[array[0]].med === undefined) {
         this.setState({
           recomCheck: newArray
         });
@@ -32,22 +30,24 @@ class MyMusic extends React.Component {
       this.setState({
         radio: true,
         checkbox: false,
-        radioArray: newArray
+        radioArray: newArray,
+        random: false
       });
     } else {
       this.setState({
         radio: true,
         checkbox: false,
         radioArray: [],
-        recomCheck: []
+        recomCheck: [],
+        random: true
       });
     }
   }
   onSelectCheck = () => {
-    const { entities } = this.props;
+    const { state } = this.props;
     const array = this.state.radioArray.slice();
     if (array.length !== 0) {
-      if (entities[array[0]].med === undefined) {
+      if (state.entities[array[0]].med === undefined) {
         this.setState({
           recomCheck: array
         });
@@ -72,17 +72,28 @@ class MyMusic extends React.Component {
     return 'radio';
   }
   handleChanceListItem = idx => {
-    const { entities } = this.props;
+    const { state } = this.props;
     if (this.state.checkbox) {
       const newArray = this.state.checkArray.slice();
       const index = newArray.indexOf(idx);
+      if (newArray.length === 5 && index === -1) {
+        this.setState({
+          chanceOver: true
+        });
+      } else {
+        this.setState({
+          chanceOver: false
+        });
+      }
       if (index === -1) {
-        newArray.push(idx);
+        if (newArray.length <= 4) {
+          newArray.push(idx);
+        }
       } else {
         newArray.splice(index, 1);
       }
       const arr = this.state.recomCheck.slice();
-      if (entities[idx].med === undefined) {
+      if (state.entities[idx].med === undefined) {
         const i = this.state.recomCheck.indexOf(idx);
         if (i === -1) {
           arr.push(idx);
@@ -100,7 +111,7 @@ class MyMusic extends React.Component {
       const radioarray = [];
       const arr = [];
       radioarray.push(idx);
-      if (entities[idx].med === undefined) {
+      if (state.entities[idx].med === undefined) {
         arr.push(idx);
         this.setState({
           recomCheck: arr,
@@ -123,7 +134,19 @@ class MyMusic extends React.Component {
       radioArray: []
     });
   }
+  showMaxReminder = () => {
+    if (this.state.chanceOver) {
+      setTimeout(() => {
+        this.setState({
+          chanceOver: false
+        });
+      }, 2000);
+      return <div className="dialog_class">多选最多选择5首哦!</div>;
+    }
+    return null;
+  }
   render() {
+    const { state } = this.props;
     return (
       <div>
         <div className="chance_button">
@@ -138,31 +161,13 @@ class MyMusic extends React.Component {
         </div>
         <MusicContent
           allState={this.state}
-          state={this.props}
+          state={state}
           onChanceListItem={this.handleChanceListItem}
           onChangeRandom={this.handleChangeRandom}
         />
+        {this.showMaxReminder()}
       </div>
     );
   }
 }
-function mapStateToProps(state) {
-  const {
-    loginReducer,
-    myMusicReducer,
-    entities,
-    recommendReducer
-  } = state;
-  return {
-    loginReducer,
-    myMusicReducer,
-    entities,
-    recommendReducer
-  };
-}
-function mapDispatchToProps(dispatch) {
-  return {
-    graduactions: bindActionCreators(ActionTypes, dispatch)
-  };
-}
-export default connect(mapStateToProps, mapDispatchToProps)(MyMusic);
+

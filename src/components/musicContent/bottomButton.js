@@ -19,35 +19,33 @@ export default class BottomButton extends React.Component {
     buttonName: ''
   };
   onShowTips = () => {
-    const { allState } = this.props;
-    if (allState.checkbox) {
-      if (this.state.showDialog) {
-        setTimeout(() => {
-          this.setState({
-            showDialog: false
-          });
-        }, 2000);
-        if (this.state.buttonName !== '删除') {
-          return (
-            <div className="dialog_class">[多选]状态下不能{this.state.buttonName}哦!</div>
-          );
-        }
-        return (
-          <div className="dialog_class">您还没有选择音乐哦!</div>
-        );
+    const { allState, state } = this.props;
+    if (this.state.showDialog) {
+      console.log(allState.radio)
+      if (allState.checkbox && this.state.buttonName !== '删除') {
+        this.Timer();
+        return <div className="dialog_class">[多选]状态下不能{this.state.buttonName}哦!</div>;
       }
-    } else return null;
-  }
-  onshowButtonState = name => {
-    const { allState } = this.props;
-    if (allState.checkbox) {
-      this.setState({
-        showDialog: true,
-        buttonName: name
-      });
+      if ((allState.radio && allState.radioArray.length === 0)
+      || ((allState.checkbox && allState.checkArray.length === 0))
+      ) {
+        this.Timer();
+        return <div className="dialog_class">您还没有选择音乐哦!</div>;
+      } else if (allState.recomCheck.length !== 0) {
+        this.Timer();
+        return <div className="dialog_class">推荐音乐不能删除哦!</div>;
+      } else if (allState.radio
+        && allState.recomCheck.length === 0
+        && allState.radioArray.length !== 0
+      ) {
+        if (state.entities[allState.radioArray[0].plp !== undefined]) {
+          this.Timer();
+          return <div className="dialog_class">漂流瓶保存的音乐不能删除哦!</div>;
+        }
+      }
     }
+    return null;
   }
-
   onPlayClick = () => {
     this.setState({
       showDialog: true,
@@ -78,7 +76,14 @@ export default class BottomButton extends React.Component {
       buttonName: '删除'
     });
   }
-
+  Timer = () => {
+    setTimeout(() => {
+      this.setState({
+        showDialog: false,
+        buttonName: ''
+      });
+    }, 1000);
+  }
   showButtonPlay = () => {
     const { allState } = this.props;
     if (allState.random || allState.checkbox) {
@@ -176,11 +181,15 @@ export default class BottomButton extends React.Component {
   }
   showButtonDelete = () => {
     const { allState } = this.props;
-    if (allState.random
-      || (allState.radio && allState.recomCheck.length !== 0)
-      || (allState.checkbox && allState.checkArray.length === 0)
-      || (allState.checkbox && allState.recomCheck.length !== 0)
-    ) {
+    if (allState.radio && (allState.random || allState.recomCheck.length !== 0)) {
+      return (
+        <div>
+          <img src={button_delete1} className="button_icon" />
+          <div className="button_style active">删除</div>
+        </div>
+      );
+    } else if (allState.checkbox && (
+      allState.checkArray.length === 0 || allState.recomCheck.length !== 0)) {
       return (
         <div>
           <img src={button_delete1} className="button_icon" />

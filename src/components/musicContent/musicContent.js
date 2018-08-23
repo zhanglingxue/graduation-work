@@ -1,7 +1,6 @@
 import React from 'react';
 import BottomButton from './bottomButton';
 import MyMusicList from './myMusicList';
-import RecommentLst from './recommentList';
 import '../music.css';
 
 export default class MusicContent extends React.Component {

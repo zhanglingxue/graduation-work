@@ -1,14 +1,14 @@
 import React from 'react';
 import '../../components/music.css';
 
-export default class Test extends React.Component {
+export default class UpLoadMusic extends React.Component {
   state = {
 
   };
 
   render() {
     return (
-      <div>Search Music</div>
+      <div>Upload Music</div>
     );
   }
 }

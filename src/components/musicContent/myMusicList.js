@@ -22,17 +22,16 @@ export default class MyMsicList extends React.Component {
       return (
         <img src={iconMark} className="img_opac" />
       );
-    } else if (allState.checkbox) {
-      const index = allState.checkArray.indexOf(idx);
-      if (index === -1) {
-        return (
-          <span className="chance_dot" />
-        );
-      }
+    }
+    const index = allState.checkArray.indexOf(idx);
+    if (index === -1) {
       return (
-        <span className="chance_dot chance_dot_show">{index + 1}</span>
+        <span className="chance_dot" />
       );
     }
+    return (
+      <span className="chance_dot chance_dot_show">{index + 1}</span>
+    );
   }
   onShowContentRandom = () => {
     const { allState } = this.props;
@@ -41,6 +40,7 @@ export default class MyMsicList extends React.Component {
         <img src={iconMark} className="img_opac_show" />
       );
     }
+    return <img src={iconMark} className="img_opac" />;
   }
   showRandomMusic = () => {
     const { allState, onChangeRandom } = this.props;
@@ -53,15 +53,14 @@ export default class MyMsicList extends React.Component {
           <p>随机音乐</p>
         </div>
       );
-    } else if (!allState.radio && allState.checkbox) {
-      return null;
     }
+    return null;
   }
   render() {
     const { state, onChanceListItem } = this.props;
     const my_music = state.myMusicReducer;
     const recomment = state.recommendReducer;
-    const entities = this.props.state.entities;
+    const entities = state.entities;
     return (
       <div>
         <div className="show_list">
