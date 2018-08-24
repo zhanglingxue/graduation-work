@@ -1,5 +1,4 @@
 import React from 'react';
-import AudioView from './audioView';
 import '../music.css';
 
 const icon_play = require('../../images/btn_pause.png');
@@ -7,7 +6,7 @@ const icon_pause = require('../../images/btn_play.png');
 const cut_start = require('../../images/cut_music_start.png');
 const cut_end = require('../../images/cut_music_finish.png');
 
-export default class MusicProgress extends React.Component {
+export default class Audio extends React.Component {
   state = {
     isPlay: false
   };
@@ -102,50 +101,37 @@ export default class MusicProgress extends React.Component {
     this.refs.time.innerHTML = `0${currArray[0]}:${currArray[1]} / 0${allArray[0]}:${allArray[1]}`;
   }
   render() {
-    const { allState, state, onCloseDialog } = this.props;
+    const { allState, state } = this.props;
     const entities = state.entities;
     const music = allState.array[0];
     const url = entities[music].m_url;
     return (
-      <div className="backgroundLyaer">
-        {
-          allState.buttonName === '' ?
-            <div className="progressBox" /> :
-            <div className="progressBox showBox">
-              <div className="closeBox">
-                <span onClick={onCloseDialog}>关闭</span>
-              </div>
-              <div className="musicName">{entities[music].name}</div>
-              <div className="musicName" ref="time">/</div>
-              <div className="musicName">
-                { this.state.isPlay ? <img src={icon_play} onClick={this.onChangeState} />
-                    : <img src={icon_pause} onClick={this.onChangeState} /> }
-                <div
-                  className="player"
-                  onTouchMove={this.onTouchControlMove}
-                  onTouchEnd={this.onTouchControlEnd}
-                >
-                  <div className="slider">
-                    <div className="processor" ref="played" />
-                    <div
-                      className="controller"
-                      ref="control"
-                      onTouchStart={this.onTouchControlStart}
-                    />
-                    <img src={cut_start} ref="cutStart" className={this.onShowClassName()} />
-                    <img src={cut_end} ref="cutEnd" className={this.onShowClassNameEnd()} />
-                  </div>
-                </div>
-                <audio
-                  ref="audio"
-                  src={url}
-                  preload="auto"
-                  loop
-                  onTimeUpdate={this.controls}
-                />
-              </div>
-            </div>
-        }
+      <div className="musicName">
+        { this.state.isPlay ? <img src={icon_play} onClick={this.onChangeState} />
+          : <img src={icon_pause} onClick={this.onChangeState} /> }
+        <div
+          className="player"
+          onTouchMove={this.onTouchControlMove}
+          onTouchEnd={this.onTouchControlEnd}
+        >
+          <div className="slider">
+            <div className="processor" ref="played" />
+            <div
+              className="controller"
+              ref="control"
+              onTouchStart={this.onTouchControlStart}
+            />
+            <img src={cut_start} ref="cutStart" className={this.onShowClassName()} />
+            <img src={cut_end} ref="cutEnd" className={this.onShowClassNameEnd()} />
+          </div>
+        </div>
+        <audio
+          ref="audio"
+          src={url}
+          preload="auto"
+          loop
+          onTimeUpdate={this.controls}
+        />
       </div>
     );
   }

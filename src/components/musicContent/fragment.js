@@ -15,8 +15,7 @@ const cut_end = require('../../images/cut_music_finish.png');
 export default class Fragment extends React.Component {
   state = {
     isPlay: false,
-    startTime: 0,
-    endTime: 0
+    mark_first: false
   };
   onChangeState = () => {
     const { state, allState } = this.props;
@@ -67,21 +66,27 @@ export default class Fragment extends React.Component {
   onMarkPointStart = () => {
     const { state, allState } = this.props;
     const audio = this.refs.audio;
-    const curr = audio.currentTime / audio.duration;
-    this.setState({
-      startTime: curr
-    });
-    if (curr !== 0) {
-      state.graduactions.fetchMarkStart(audio.currentTime, allState.array[0]);
-      // this.refs.played.style.left = `${curr * 260}px`;
-      // this.refs.cutStart.style.left = `${curr * 260}px`;
-    }
+    state.graduactions.fetchMarkStart(audio.currentTime, allState.array[0]);
   }
   onClearMark = () => {
-    const audio = this.refs.audio;
+    const { state, allState } = this.props;
+    state.graduactions.fetchMarkClear(allState.array[0]);
   }
   onMarkPointEnd = () => {
+    const { state, allState } = this.props;
     const audio = this.refs.audio;
+    if (state.entities[allState.array[0]].bmt !== 0) {
+      state.graduactions.fetchMarkEnd(audio.currentTime, allState.array[0]);
+    } else {
+      setTimeout(() => {
+        this.setState({
+          mark_first: false
+        });
+      }, 1000);
+      this.setState({
+        mark_first: true
+      });
+    }
   }
   onShowClassName = () => {
     const { state, allState } = this.props;
@@ -97,6 +102,12 @@ export default class Fragment extends React.Component {
     }
     return 'cut_start cut_none';
   }
+  onMarkleftPoint = () => {
+    if (this.state.mark_first) {
+      return 'mark_start_first';
+    }
+    return 'cut_none';
+  }
   controls = () => {
     const { state, allState } = this.props;
     const startTime = state.entities[allState.array[0]].bmt;
@@ -109,11 +120,19 @@ export default class Fragment extends React.Component {
       const difference = audio.currentTime - startTime;
       const curr = startTime / audio.duration;
       this.refs.played.style.width = `${(difference / audio.duration) * 100}%`;
-      this.refs.cutStart.style.left = `${curr * 260}px`;
+      this.refs.cutStart.style.left = `${curr * 100}%`;
+      if (this.refs.control.style.left < this.refs.cutStart.style.left) {
+        audio.currentTime = startTime;
+        audio.play();
+      }
     }
     if (endTime !== 0) {
       const curr = endTime / audio.duration;
-      this.refs.cutEnd.style.left = `${curr * 260}px`;
+      this.refs.cutEnd.style.left = `${curr * 100}%`;
+      if (this.refs.control.style.left >= this.refs.cutEnd.style.left) {
+        audio.currentTime = startTime;
+        audio.play();
+      }
     }
     this.refs.control.style.left = `${time * 100}%`;
     this.refs.played.style.left = `${(startTime / audio.duration) * 100}%`;
@@ -136,95 +155,58 @@ export default class Fragment extends React.Component {
             <div className="fragmentBox showFragment">
               <div className="mark">
                 <div>
-                  {
-                    entities[music].bmt === 0 ?
-                      <img
-                        src={mark_start}
-                        onClick={this.onMarkPointStart}
-                      /> :
-                      <img src={mark_start_gray} />
-                  }
+                  { entities[music].bmt === 0 ?
+                    <img src={mark_start} onClick={this.onMarkPointStart} /> :
+                    <img src={mark_start_gray} /> }
                   <p>标记起点</p>
                 </div>
                 <div>
-                  {
-                    entities[music].bmt === 0 && entities[music].emt === 0 ?
-                      <img
-                        src={clear_gray}
-                        onClick={this.onClearMark}
-                      /> :
-                      <img
-                        src={clear}
-                        onClick={this.onClearMark}
-                      />
-                  }
+                  { entities[music].bmt === 0 && entities[music].emt === 0 ?
+                    <img src={clear_gray} onClick={this.onClearMark} /> :
+                    <img src={clear} onClick={this.onClearMark} /> }
                   <p>清除</p>
                 </div>
                 <div>
-                  {
-                    entities[music].emt === 0 ?
-                      <img
-                        src={mark_end}
-                        onClick={this.onMarkPointEnd}
-                      /> :
-                      <img src={mark_end_gray} />
-                  }
+                  { entities[music].emt === 0 ?
+                    <img src={mark_end} onClick={this.onMarkPointEnd} /> :
+                    <img src={mark_end_gray} /> }
                   <p>标记终点</p>
                 </div>
               </div>
               <div className="musicName">
-                {
-                  this.state.isPlay ?
-                    <img src={icon_play} onClick={this.onChangeState} />
-                    :
-                    <img src={icon_pause} onClick={this.onChangeState} />
-                }
+                { this.state.isPlay ? <img src={icon_play} onClick={this.onChangeState} /> :
+                <img src={icon_pause} onClick={this.onChangeState} /> }
                 <div
                   className="player"
                   onTouchMove={this.onTouchControlMove}
                   onTouchEnd={this.onTouchControlEnd}
                 >
                   <div className="slider">
-                    <div
-                      className="processor"
-                      ref="played"
-                    />
+                    <div className="processor" ref="played" />
                     <div
                       className="controller"
                       ref="control"
                       onTouchStart={this.onTouchControlStart}
                     />
-                    <img
-                      src={cut_start}
-                      ref="cutStart"
-                      className={this.onShowClassName()}
-                    />
-                    <img
-                      src={cut_end}
-                      ref="cutEnd"
-                      className={this.onShowClassNameEnd()}
-                    />
+                    <img src={cut_start} ref="cutStart" className={this.onShowClassName()} />
+                    <img src={cut_end} ref="cutEnd" className={this.onShowClassNameEnd()} />
                   </div>
                 </div>
-                <div className="musicTime" ref="time">/</div>
-                <div
-                  className="completeChancefeagment"
-                  onClick={this.onChanceFragment}
-                >
+                <div className="musicTime" ref="time" />
+                <div className="completeChancefeagment" onClick={this.onChanceFragment}>
                   完成
                 </div>
                 <audio
                   ref="audio"
                   src={url}
                   preload="auto"
-                  hidden
                   loop
-                  controls="controls"
                   onTimeUpdate={this.controls}
                 />
               </div>
             </div>
         }
+        <div className={this.onMarkleftPoint()}>请先标记起点哦!</div>
       </div>
     );
   }

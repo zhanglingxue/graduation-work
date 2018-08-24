@@ -61,11 +61,27 @@ function fetchMarkStart(time, idx) {
     idx
   };
 }
+function fetchMarkEnd(time, idx) {
+  return {
+    type: ActionTypes.FETCH_MARK_END,
+    time,
+    idx
+  };
+}
+
+function fetchMarkClear(idx) {
+  return {
+    type: ActionTypes.FETCH_MARK_CLEAR,
+    idx
+  };
+}
 export {
   fetchLogin,
   fetchMyMusicList,
   fetchRecommendMusicList,
   fetchDeleteMusic,
   fetchSubmitMusicName,
-  fetchMarkStart
+  fetchMarkStart,
+  fetchMarkEnd,
+  fetchMarkClear
 };

@@ -28,6 +28,17 @@ export default function Entities(state = {}, action) {
       newState[action.idx].bmt = action.time;
       return newState;
     }
+    case ActionTypes.FETCH_MARK_END: {
+      const newState = { ...state };
+      newState[action.idx].emt = action.time;
+      return newState;
+    }
+    case ActionTypes.FETCH_MARK_CLEAR: {
+      const newState = { ...state };
+      newState[action.idx].bmt = 0;
+      newState[action.idx].emt = 0;
+      return newState;
+    }
     default: {
       return state;
     }

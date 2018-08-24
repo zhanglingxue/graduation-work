@@ -457,3 +457,16 @@ p,h1,h2,h3{
   line-height: 40px;
   background: #e0e0e0;
 }
+.mark_start_first{
+  position: fixed;
+  bottom:40px;
+  left:10%;
+  right:10%;
+  background: #062743;
+  opacity: 0.8;
+  height:80px;
+  color:#fff;
+  font-size:18px;
+  text-align: center;
+  line-height: 80px;
+}

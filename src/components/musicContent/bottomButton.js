@@ -29,6 +29,7 @@ export default class BottomButton extends React.Component {
       name: '删除'
     }]
   };
+
   onShowTips = () => {
     const {
       allState,
