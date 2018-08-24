@@ -54,10 +54,18 @@ function fetchSubmitMusicName(id, value) {
     value
   };
 }
+function fetchMarkStart(time, idx) {
+  return {
+    type: ActionTypes.FETCH_MARK_START,
+    time,
+    idx
+  };
+}
 export {
   fetchLogin,
   fetchMyMusicList,
   fetchRecommendMusicList,
   fetchDeleteMusic,
-  fetchSubmitMusicName
+  fetchSubmitMusicName,
+  fetchMarkStart
 };

@@ -2,6 +2,7 @@ import React from 'react';
 import ButtonContent from './buttonContent';
 import DialogView from './Dialog';
 import MusicProgress from './musicProgress';
+import Fragment from './fragment';
 import '../music.css';
 
 export default class BottomButton extends React.Component {
@@ -41,8 +42,9 @@ export default class BottomButton extends React.Component {
           if (allState.array.length === 0) {
             return <div className="dialog_class">您还没有选择音乐哦!</div>;
           }
+        } else if (allState.buttonName !== '删除') {
+          return <div className="dialog_class">[多选]状态下不能{allState.buttonName}哦!</div>;
         }
-        return <div className="dialog_class">[多选]状态下不能{allState.buttonName}哦!</div>;
       }
       if (allState.recomCheck.length === 0
         && allState.array.length !== 0) {
@@ -57,8 +59,14 @@ export default class BottomButton extends React.Component {
         return <div className="dialog_class">推荐音乐不能{allState.buttonName}哦!</div>;
       }
       if (allState.array.length !== 0) {
-        if (allState.buttonName === '播放' || allState.buttonName === '选择片段') {
+        if (allState.buttonName === '播放') {
           return (<MusicProgress
+            allState={allState}
+            state={state}
+            onCloseDialog={onCloseDialog}
+          />);
+        } else if (allState.buttonName === '选择片段') {
+          return (<Fragment
             allState={allState}
             state={state}
             onCloseDialog={onCloseDialog}

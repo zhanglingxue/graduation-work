@@ -23,6 +23,11 @@ export default function Entities(state = {}, action) {
       newState[action.id].name = action.value;
       return newState;
     }
+    case ActionTypes.FETCH_MARK_START: {
+      const newState = { ...state };
+      newState[action.idx].bmt = action.time;
+      return newState;
+    }
     default: {
       return state;
     }
