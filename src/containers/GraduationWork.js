@@ -9,6 +9,12 @@ import '../components/music.css';
 import './GraduationWork.css';
 
 const icon_back = require('../images/return.png');
+const artboard_upload = require('../images/artboard_upload.png');
+const artboard_upload_gray = require('../images/artboard_upload_gray.png');
+const artboard_music = require('../images/artboard_music.png');
+const artboard_music_gray = require('../images/artboard_music_gray.png');
+const artboard_search_gray = require('../images/artboard_search_gray.png');
+const artboard_search = require('../images/artboard_search.png');
 
 class GraduationWork extends React.Component {
   state = {
@@ -74,30 +80,48 @@ class GraduationWork extends React.Component {
               {
                 this.state.myMusic ?
                   <div>
-                    <div className="tab_red">我的音乐</div>
+                    <div className="tab_option tab_color">
+                      <img src={artboard_music} />
+                      我的音乐
+                    </div>
                     <div className="tab_bottom_red" />
                   </div> :
-                  <div>我的音乐</div>
+                  <div className="tab_option">
+                    <img src={artboard_music_gray} />
+                    我的音乐
+                  </div>
               }
             </span>
             <span onClick={this.onSearchMusicClick}>
               {
                 this.state.searchMusic ?
                   <div>
-                    <div className="tab_red">搜索音乐</div>
+                    <div className="tab_option tab_color">
+                      <img src={artboard_search} />
+                      搜索音乐
+                    </div>
                     <div className="tab_bottom_red" />
                   </div> :
-                  <div>搜索音乐</div>
+                  <div className="tab_option">
+                    <img src={artboard_search_gray} />
+                    搜索音乐
+                  </div>
               }
             </span>
             <span onClick={this.onUploadhMusicClick}>
               {
                 this.state.uploadMusic ?
                   <div>
-                    <div className="tab_red">上传音乐</div>
+                    <div className="tab_option tab_color">
+                      <img src={artboard_upload} />
+                      上传音乐
+                    </div>
                     <div className="tab_bottom_red" />
                   </div> :
-                  <div>上传音乐</div>
+                  <div className="tab_option">
+                    <img src={artboard_upload_gray} />
+                    上传音乐
+                  </div>
               }
             </span>
           </div>
