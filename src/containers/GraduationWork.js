@@ -5,52 +5,35 @@ import * as ActionTypes from '../actions';
 import MyMusic from '../components/tabsChildren/myMusic';
 import SearchMusic from '../components/tabsChildren/searchMusic';
 import UploadMusic from '../components/tabsChildren/uploadMusic';
+import TabPane from '../components/tabs/tabPane';
 import '../components/music.css';
 import './GraduationWork.css';
 
 const icon_back = require('../images/return.png');
 const artboard_upload = require('../images/artboard_upload.png');
 const artboard_upload_gray = require('../images/artboard_upload_gray.png');
-const artboard_music = require('../images/artboard_music.png');
-const artboard_music_gray = require('../images/artboard_music_gray.png');
 const artboard_search_gray = require('../images/artboard_search_gray.png');
 const artboard_search = require('../images/artboard_search.png');
+const artboard_music = require('../images/artboard_music.png');
+const artboard_music_gray = require('../images/artboard_music_gray.png');
 
 class GraduationWork extends React.Component {
   state = {
-    myMusic: true,
-    searchMusic: false,
-    uploadMusic: false
+    tab: '1'
   }
   componentDidMount = () => {
     const { graduactions } = this.props;
     graduactions.fetchLogin(115);
   }
-  onMyMusicClick = () => {
+  onChangeClick = value => {
     this.setState({
-      myMusic: true,
-      searchMusic: false,
-      uploadMusic: false
-    });
-  }
-  onSearchMusicClick = () => {
-    this.setState({
-      myMusic: false,
-      searchMusic: true,
-      uploadMusic: false
-    });
-  }
-  onUploadhMusicClick = () => {
-    this.setState({
-      myMusic: false,
-      searchMusic: false,
-      uploadMusic: true
+      tab: value
     });
   }
   showTopBarContents = () => {
-    if (this.state.myMusic) {
+    if (this.state.tab === '1') {
       return <MyMusic state={this.props} />;
-    } else if (this.state.searchMusic) {
+    } else if (this.state.tab === '2') {
       return <SearchMusic state={this.props} />;
     }
     return <UploadMusic state={this.props} />;
@@ -76,54 +59,30 @@ class GraduationWork extends React.Component {
             </span>
           </div>
           <div className="chance_router">
-            <span onClick={this.onMyMusicClick}>
-              {
-                this.state.myMusic ?
-                  <div>
-                    <div className="tab_option tab_color">
-                      <img src={artboard_music} />
-                      我的音乐
-                    </div>
-                    <div className="tab_bottom_red" />
-                  </div> :
-                  <div className="tab_option">
-                    <img src={artboard_music_gray} />
-                    我的音乐
-                  </div>
-              }
-            </span>
-            <span onClick={this.onSearchMusicClick}>
-              {
-                this.state.searchMusic ?
-                  <div>
-                    <div className="tab_option tab_color">
-                      <img src={artboard_search} />
-                      搜索音乐
-                    </div>
-                    <div className="tab_bottom_red" />
-                  </div> :
-                  <div className="tab_option">
-                    <img src={artboard_search_gray} />
-                    搜索音乐
-                  </div>
-              }
-            </span>
-            <span onClick={this.onUploadhMusicClick}>
-              {
-                this.state.uploadMusic ?
-                  <div>
-                    <div className="tab_option tab_color">
-                      <img src={artboard_upload} />
-                      上传音乐
-                    </div>
-                    <div className="tab_bottom_red" />
-                  </div> :
-                  <div className="tab_option">
-                    <img src={artboard_upload_gray} />
-                    上传音乐
-                  </div>
-              }
-            </span>
+            <TabPane
+              state={this.state}
+              keyValue="1"
+              callback={this.onChangeClick}
+              name="我的音乐"
+              icon_red={artboard_music}
+              icon_gray={artboard_music_gray}
+            />
+            <TabPane
+              state={this.state}
+              keyValue="2"
+              callback={this.onChangeClick}
+              name="搜索音乐"
+              icon_red={artboard_search}
+              icon_gray={artboard_search_gray}
+            />
+            <TabPane
+              state={this.state}
+              keyValue="3"
+              callback={this.onChangeClick}
+              name="上传音乐"
+              icon_red={artboard_upload}
+              icon_gray={artboard_upload_gray}
+            />
           </div>
         </div>
         <div className="props_children">

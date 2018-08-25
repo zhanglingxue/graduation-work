@@ -25,8 +25,9 @@ export default class ButtonContent extends React.Component {
       }
       case '重命名': {
         if (allState.radio) {
-          if (allState.recomCheck.length === 0
-            && allState.array.length !== 0) {
+          if (
+            (allState.recomCheck.length === 0
+            && allState.array.length !== 0)) {
             const plp = allState.array[0];
             if (state.entities[plp].plp !== undefined) {
               return (
