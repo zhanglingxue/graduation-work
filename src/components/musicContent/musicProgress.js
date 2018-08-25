@@ -19,7 +19,8 @@ export default class MusicProgress extends React.Component {
     const entities = state.entities;
     const music = allState.array[0];
     return (
-      <div className="backgroundLyaer">
+      <div>
+        <div className="backgroundLyaer" onClick={onCloseDialog} />
         {
           allState.buttonName === '' ?
             <div className="progressBox" /> :

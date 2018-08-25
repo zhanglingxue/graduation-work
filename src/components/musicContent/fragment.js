@@ -82,58 +82,60 @@ export default class Fragment extends React.Component {
     });
   }
   render() {
-    const { allState, state } = this.props;
+    const { allState, state, onCloseDialog } = this.props;
     const entities = state.entities;
     const music = allState.array[0];
     this.startTime = this.transTime(entities[music].bmt);
     this.endTime = this.transTime(entities[music].emt);
     this.allTime = this.transTime(entities[music].du);
     return (
-      <div className="backgroundLyaer">
+      <div>
+        <div className="backgroundLyaer" onClick={onCloseDialog} />
         {
-          allState.buttonName === '' ?
-            <div className="fragmentBox" /> :
-            <div className="fragmentBox showFragment">
-              <div className="mark">
-                <div>
-                  { entities[music].bmt === 0 ?
-                    <img src={mark_start} onClick={this.onMarkPointStart} /> :
-                    <img src={mark_start_gray} /> }
-                  <p>标记起点</p>
-                  <p>{this.startTime}</p>
-                </div>
-                <div>
-                  { entities[music].bmt === 0 && entities[music].emt === 0 ?
-                    <img src={clear_gray} onClick={this.onClearMark} /> :
-                    <img src={clear} onClick={this.onClearMark} /> }
-                  <p>清除</p>
-                </div>
-                <div>
-                  { entities[music].emt === 0 ?
-                    <img src={mark_end} onClick={this.onMarkPointEnd} /> :
-                    <img src={mark_end_gray} /> }
-                  <p>标记终点</p>
-                  <p>
-                    {
-                      entities[music].emt === 0 ? `${this.allTime}` : `${this.endTime}`
-                    }
-                  </p>
-                </div>
+        allState.buttonName === '' ?
+          <div className="fragmentBox" /> :
+          <div className="fragmentBox showFragment">
+            <div className="mark">
+              <div>
+                { entities[music].bmt === 0 ?
+                  <img src={mark_start} onClick={this.onMarkPointStart} /> :
+                  <img src={mark_start_gray} /> }
+                <p>标记起点</p>
+                <p>{this.startTime}</p>
               </div>
-              <AudioView
-                allState={allState}
-                state={state}
-                onChangeTime={this.changeTime}
-                callBack={this.showAudioContent}
-              />
-              <div className="musicTime" ref="time">/</div>
-              <div className="completeChancefeagment" onClick={this.onChanceFragment}>
-                完成
+              <div>
+                { entities[music].bmt === 0 && entities[music].emt === 0 ?
+                  <img src={clear_gray} onClick={this.onClearMark} /> :
+                  <img src={clear} onClick={this.onClearMark} /> }
+                <p>清除</p>
+              </div>
+              <div>
+                { entities[music].emt === 0 ?
+                  <img src={mark_end} onClick={this.onMarkPointEnd} /> :
+                  <img src={mark_end_gray} /> }
+                <p>标记终点</p>
+                <p>
+                  {
+                    entities[music].emt === 0 ? `${this.allTime}` : `${this.endTime}`
+                  }
+                </p>
               </div>
             </div>
+            <AudioView
+              allState={allState}
+              state={state}
+              onChangeTime={this.changeTime}
+              callBack={this.showAudioContent}
+            />
+            <div className="musicTime" ref="time">/</div>
+            <div className="completeChancefeagment" onClick={this.onChanceFragment}>
+              完成
+            </div>
+          </div>
         }
         <div className={this.onMarkleftPoint()}>请先标记起点哦!</div>
       </div>
+
     );
   }
 }

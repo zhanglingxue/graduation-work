@@ -349,12 +349,12 @@ p,h1,h2,h3{
   width: 80%;
   height:24px;
 }
-
 .progressBox{
   position: absolute;
   bottom: 0;
   left: 0;
   right: 0;
+  z-index:500;
   background: #fff;
   height:150px;
   transform: translateY(100%);
@@ -434,6 +434,7 @@ p,h1,h2,h3{
   bottom: 0;
   left: 0;
   right: 0;
+  z-index:500;
   background: #fff;
   height:240px;
   transform: translateY(100%);
