@@ -49,6 +49,30 @@ export default class Fragment extends React.Component {
     }
     return 'cut_none';
   }
+  transTime = value => {
+    let transTime = '';
+    const h = parseInt(value / 3600);
+    value %= 3600;
+    const m = parseInt(value / 60);
+    const s = parseInt(value % 60);
+    if (h > 0) {
+      transTime = this.formatTime(`${h}:${m}:${s}`);
+    } else {
+      transTime = this.formatTime(`${m}:${s}`);
+    }
+    return transTime;
+  }
+  formatTime = value => {
+    let formatTime = '';
+    const s = value.split(':');
+    let i = 0;
+    for (; i < s.length - 1; i++) {
+      formatTime += s[i].length == 1 ? (`0${s[i]}`) : s[i];
+      formatTime += ':';
+    }
+    formatTime += s[i].length == 1 ? (`0${s[i]}`) : s[i];
+    return formatTime;
+  }
   changeTime = value => {
     this.refs.time.innerHTML = value;
   }
@@ -61,12 +85,9 @@ export default class Fragment extends React.Component {
     const { allState, state } = this.props;
     const entities = state.entities;
     const music = allState.array[0];
-    const startTime = (entities[music].bmt / 60).toFixed(2);
-    const endTime = (entities[music].emt / 60).toFixed(2);
-    const allTime = (entities[music].du / 60).toFixed(2);
-    const endArray = endTime.split('.');
-    const allArray = allTime.split('.');
-    const currArray = startTime.split('.');
+    this.startTime = this.transTime(entities[music].bmt);
+    this.endTime = this.transTime(entities[music].emt);
+    this.allTime = this.transTime(entities[music].du);
     return (
       <div className="backgroundLyaer">
         {
@@ -79,7 +100,7 @@ export default class Fragment extends React.Component {
                     <img src={mark_start} onClick={this.onMarkPointStart} /> :
                     <img src={mark_start_gray} /> }
                   <p>标记起点</p>
-                  <p>{`0${currArray[0]}:${currArray[1]}`}</p>
+                  <p>{this.startTime}</p>
                 </div>
                 <div>
                   { entities[music].bmt === 0 && entities[music].emt === 0 ?
@@ -94,9 +115,7 @@ export default class Fragment extends React.Component {
                   <p>标记终点</p>
                   <p>
                     {
-                      entities[music].emt === 0 ?
-                      `0${allArray[0]}:${allArray[1]}` :
-                      `0${endArray[0]}:${endArray[1]}`
+                      entities[music].emt === 0 ? `${this.allTime}` : `${this.endTime}`
                     }
                   </p>
                 </div>
@@ -107,7 +126,7 @@ export default class Fragment extends React.Component {
                 onChangeTime={this.changeTime}
                 callBack={this.showAudioContent}
               />
-              <div className="musicTime" ref="time" />
+              <div className="musicTime" ref="time">/</div>
               <div className="completeChancefeagment" onClick={this.onChanceFragment}>
                 完成
               </div>

@@ -8,25 +8,16 @@ const cut_end = require('../../images/cut_music_finish.png');
 
 export default class Audio extends React.Component {
   state = {
-    isPlay: false
+    isPlay: true
   };
   componentDidMount() {
     const { callBack } = this.props;
     callBack(this.refs.audio);
   }
   onChangeState = () => {
-    const { state, allState } = this.props;
-    const startTime = state.entities[allState.array[0]].bmt;
     const audio = this.refs.audio;
     if (audio !== null) {
-      if (startTime === 0) {
-        if (audio.paused) {
-          audio.play();
-        } else {
-          audio.pause();
-        }
-      } else if (audio.paused) {
-        audio.currentTime = startTime;
+      if (audio.paused) {
         audio.play();
       } else {
         audio.pause();
@@ -37,7 +28,10 @@ export default class Audio extends React.Component {
     });
   }
   onTouchSame = touchX => {
-    const time = (touchX - 65) / 300;
+    const width = window.screen.width;
+    const margin_width = width * 0.17;
+    const pressWidth = width * 0.73;
+    const time = (touchX - margin_width) / pressWidth;
     this.refs.played.style.width = `${time * 100}%`;
     this.refs.control.style.left = `${time * 100}%`;
   }
@@ -50,7 +44,10 @@ export default class Audio extends React.Component {
     const allTime = state.entities[allState.array[0]].du;
     this.endX = e.changedTouches[0].clientX;
     const audio = this.refs.audio;
-    const time = (this.endX - 65) / 300;
+    const width = window.screen.width;
+    const margin_width = width * 0.17;
+    const pressWidth = width * 0.73;
+    const time = (this.endX - margin_width) / pressWidth;
     this.onTouchSame(this.endX);
     audio.currentTime = time * allTime;
   }
@@ -79,7 +76,7 @@ export default class Audio extends React.Component {
     const allTime = state.entities[allState.array[0]].du;
     const audio = this.refs.audio;
     const time = audio.currentTime / allTime;
-    if (startTime === 0) {
+    if (startTime === 0) { // 如果音乐没有起始标记
       this.refs.played.style.width = `${time * 100}%`;
     } else {
       const difference = audio.currentTime - startTime;
@@ -107,11 +104,33 @@ export default class Audio extends React.Component {
     }
     this.refs.control.style.left = `${time * 100}%`;
     this.refs.played.style.left = `${(startTime / allTime) * 100}%`;
-    const allTimelength = (allTime / 60).toFixed(2);
-    const currTime = ((time * allTime) / 60).toFixed(2);
-    const allArray = allTimelength.split('.');
-    const currArray = currTime.split('.');
-    onChangeTime(`0${currArray[0]}:${currArray[1]} / 0${allArray[0]}:${allArray[1]}`);
+    const totalTime = this.transTime(allTime);
+    const playTime = this.transTime(time * allTime);
+    onChangeTime(`${playTime}/${totalTime}`);
+  }
+  transTime = value => {
+    let transTime = '';
+    const h = parseInt(value / 3600);
+    value %= 3600;
+    const m = parseInt(value / 60);
+    const s = parseInt(value % 60);
+    if (h > 0) {
+      transTime = this.formatTime(`${h}:${m}:${s}`);
+    } else {
+      transTime = this.formatTime(`${m}:${s}`);
+    }
+    return transTime;
+  }
+  formatTime = value => {
+    let formatTime = '';
+    const s = value.split(':');
+    let i = 0;
+    for (; i < s.length - 1; i++) {
+      formatTime += s[i].length == 1 ? (`0${s[i]}`) : s[i];
+      formatTime += ':';
+    }
+    formatTime += s[i].length == 1 ? (`0${s[i]}`) : s[i];
+    return formatTime;
   }
   render() {
     const { allState, state } = this.props;
@@ -120,10 +139,20 @@ export default class Audio extends React.Component {
     const url = entities[music].m_url;
     return (
       <div className="musicName">
-        { this.state.isPlay ? <img src={icon_play} onClick={this.onChangeState} />
-          : <img src={icon_pause} onClick={this.onChangeState} /> }
+        <div className="img_button">{ this.state.isPlay ? <img
+          src={icon_play}
+          onClick={this.onChangeState}
+          className="musicName_img"
+        />
+          : <img
+            src={icon_pause}
+            onClick={this.onChangeState}
+            className="musicName_img"
+          /> }
+        </div>
         <div
           className="player"
+          ref="playcontainer"
           onTouchMove={this.onTouchControlMove}
           onTouchEnd={this.onTouchControlEnd}
         >
@@ -141,7 +170,8 @@ export default class Audio extends React.Component {
         <audio
           ref="audio"
           src={url}
-          preload="auto"
+          autoPlay
+          // preload="auto"
           loop
           onTimeUpdate={this.controls}
         />
