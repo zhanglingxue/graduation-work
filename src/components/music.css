@@ -298,7 +298,7 @@ p,h1,h2,h3{
   background: rgba(0, 0, 0, .6);
 }
 .delete_dialog{
-  position: absolute;
+  position: fixed;
   bottom: 200px;
   text-align: center;
   left:40px;
@@ -351,7 +351,7 @@ p,h1,h2,h3{
   height:24px;
 }
 .progressBox{
-  position: absolute;
+  position: fixed;
   bottom: 0;
   left: 0;
   right: 0;
@@ -431,7 +431,7 @@ p,h1,h2,h3{
   display: none;
 }
 .fragmentBox{
-  position: absolute;
+  position: fixed;
   bottom: 0;
   left: 0;
   right: 0;

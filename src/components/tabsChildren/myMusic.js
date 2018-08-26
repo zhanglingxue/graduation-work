@@ -1,5 +1,6 @@
 import React from 'react';
 import MusicContent from '../musicContent/musicContent';
+import TipsView from '../musicContent/tips';
 import '../../components/music.css';
 
 export default class MyMusic extends React.Component {
@@ -11,6 +12,7 @@ export default class MyMusic extends React.Component {
     random: true, // 默认单选页面选中随机音乐
     chanceOver: false, // 多选状态下选第6首的状态为true
     showDialog: false, // 不同button状态下显示提示框状态
+    showNotification: false, // 提示框
     buttonName: '' // 当前点击button名称
   };
   onSelectRadio = () => {
@@ -33,7 +35,7 @@ export default class MyMusic extends React.Component {
         checkbox: false,
         array: newArray,
         random: false,
-        showDialog: false
+        showNotification: false
       });
     } else {
       this.setState({
@@ -42,7 +44,7 @@ export default class MyMusic extends React.Component {
         array: [],
         recomCheck: [],
         random: true,
-        showDialog: false
+        showNotification: false
       });
     }
   }
@@ -148,34 +150,38 @@ export default class MyMusic extends React.Component {
     }
     return null;
   }
-  Timer = () => {
+  Timer = name => {
     setTimeout(() => {
       this.setState({
-        showDialog: false,
+        showNotification: false,
         buttonName: ''
       });
     }, 1000);
+    this.setState({
+      showNotification: true,
+      buttonName: name
+    });
   }
   handleShowTipBox = name => {
     const { state } = this.props;
     if (this.state.array.length === 0) {
-      this.Timer();
-    }
-    if (this.state.checkbox
+      this.Timer(name);
+    } else if (this.state.checkbox
       && ((this.state.array.length !== 0 && name !== '删除')
       || this.state.recomCheck.length !== 0)
     ) {
-      this.Timer();
+      this.Timer(name);
     } else if (this.state.radio
       && ((this.state.array.length !== 0 && state.entities[this.state.array[0]].plp !== undefined && name === '重命名')
       || (this.state.recomCheck.length !== 0 && name !== '播放'))
     ) {
-      this.Timer();
+      this.Timer(name);
+    } else {
+      this.setState({
+        showDialog: true,
+        buttonName: name
+      });
     }
-    this.setState({
-      showDialog: true,
-      buttonName: name
-    });
   }
   handleCloseDialog = () => {
     this.setState({
@@ -213,6 +219,10 @@ export default class MyMusic extends React.Component {
           onChanceListItem={this.handleChanceListItem}
           onChangeRandom={this.handleChangeRandom}
           onshowTipBox={this.handleShowTipBox}
+        />
+        <TipsView
+          state={state}
+          allState={this.state}
           onCloseDialog={this.handleCloseDialog}
           onSureDelete={this.handleSureDelete}
         />
