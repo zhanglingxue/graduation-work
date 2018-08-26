@@ -67,12 +67,12 @@ export default class MyMsicList extends React.Component {
         </div>
         { this.showRandomMusic() }
         {
-          recomment.map(item => (
-            <div className="myMusic_list" onClick={onChanceListItem.bind(this, item)}>
+          recomment.map(idx => (
+            <div className="myMusic_list" onClick={onChanceListItem.bind(this, idx)}>
               <div className="selectStyle">
-                {this.onShowContent(item)}
+                {this.onShowContent(idx)}
               </div>
-              <p>{entities[item].name}</p>
+              <p>{entities[idx].name}</p>
             </div>
           ))
         }

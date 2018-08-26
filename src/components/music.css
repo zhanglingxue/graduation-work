@@ -307,6 +307,7 @@ p,h1,h2,h3{
   background: #fff;
   opacity: 1;
   border-radius: 5px;
+  z-index: 500;
 }
 .delete_content{
   height: 100px;

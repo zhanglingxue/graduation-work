@@ -3,7 +3,6 @@ import '../music.css';
 
 export default class SingleButton extends React.Component {
   state = {
-
   };
 
   render() {

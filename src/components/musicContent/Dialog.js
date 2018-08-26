@@ -50,7 +50,8 @@ export default class Dialog extends React.Component {
   render() {
     const { onCloseDialog, allState } = this.props;
     return (
-      <div className="backgroundLyaer" onClick={onCloseDialog}>
+      <div>
+        <div className="backgroundLyaer" onClick={onCloseDialog} />
         <div className="delete_dialog">
           <div className="delete_content">
             {this.onShowDialogContent()}
