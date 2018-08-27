@@ -8,7 +8,9 @@ const cut_end = require('../../images/cut_music_finish.png');
 
 export default class Audio extends React.Component {
   state = {
-    isPlay: true
+    isPlay: true,
+    current: false,
+    isMove: false
   };
   componentDidMount() {
     const { callBack } = this.props;
@@ -28,41 +30,87 @@ export default class Audio extends React.Component {
     });
   }
   onTouchSame = touchX => {
+    const { state, allState } = this.props;
+    const startTime = state.entities[allState.array[0]].bmt;
+    const allTime = state.entities[allState.array[0]].du;
+    const endTime = state.entities[allState.array[0]].emt;
+    const audio = this.refs.audio;
     const width = window.screen.width;
     const margin_width = width * 0.17;
     const pressWidth = width * 0.73;
-    const time = (touchX - margin_width) / pressWidth;
-    this.refs.played.style.width = `${time * 100}%`;
-    this.refs.control.style.left = `${time * 100}%`;
+    const time = (touchX - margin_width) / pressWidth; // 当前坐标占进度条的百分比(小数)
+    if (startTime === 0) {
+      if (this.state.isMove) {
+        audio.pause();
+      }
+      this.refs.played.style.width = `${time * 100}%`;
+      this.refs.control.style.left = `${time * 100}%`;
+      audio.currentTime = time * allTime;
+    } else if (startTime !== 0) {
+      if (time < (startTime / allTime)) {
+        if (this.state.isMove) {
+          audio.pause();
+        }
+        this.refs.control.style.left = `${(startTime / allTime) * 100}%`;
+        this.refs.played.style.width = '0%';
+        audio.currentTime = startTime;
+      }
+    }
+    if (endTime === 0) {
+      if (this.state.isMove) {
+        audio.pause();
+      }
+      this.refs.played.style.width = `${(time - (startTime / allTime)) * 100}%`;
+      this.refs.control.style.left = `${time * 100}%`;
+      audio.currentTime = time * allTime;
+    } else if (time > (endTime / allTime)) {
+      if (this.state.isMove) {
+        audio.pause();
+        this.refs.played.style.width = `${((endTime - startTime) / allTime) * 100}%`;
+        this.refs.control.style.left = `${(endTime / allTime) * 100}%`;
+        audio.currentTime = endTime;
+      } else {
+        this.refs.played.style.width = '0%';
+        this.refs.control.style.left = `${(startTime / allTime) * 100}%`;
+        audio.currentTime = startTime;
+      }
+    } else {
+      if (this.state.isMove) {
+        audio.pause();
+      }
+      this.refs.played.style.width = `${(time - (startTime / allTime)) * 100}%`;
+      this.refs.control.style.left = `${time * 100}%`;
+      audio.currentTime = time * allTime;
+    }
   }
   onTouchControlStart = e => {
     this.startX = e.touches[0].clientX;
     this.onTouchSame(this.startX);
   }
   onTouchControlEnd = e => {
-    const { state, allState } = this.props;
-    const allTime = state.entities[allState.array[0]].du;
-    this.endX = e.changedTouches[0].clientX;
     const audio = this.refs.audio;
-    const width = window.screen.width;
-    const margin_width = width * 0.17;
-    const pressWidth = width * 0.73;
-    const time = (this.endX - margin_width) / pressWidth;
+    this.endX = e.changedTouches[0].clientX;
     this.onTouchSame(this.endX);
-    audio.currentTime = time * allTime;
+    this.setState({
+      isMove: false
+    });
+    audio.play();
   }
   onTouchControlMove = e => {
     this.moveX = e.changedTouches[0].clientX;
+    this.setState({
+      isMove: true
+    });
     this.onTouchSame(this.moveX);
   }
-  onShowClassName = () => {
+  onShowCutStart = () => {
     const { state, allState } = this.props;
     if (state.entities[allState.array[0]].bmt !== 0) {
       return 'cut_start';
     }
     return 'cut_start cut_none';
   }
-  onShowClassNameEnd = () => {
+  onShowCutEnd = () => {
     const { state, allState } = this.props;
     if (state.entities[allState.array[0]].emt !== 0) {
       return 'cut_start';
@@ -76,34 +124,38 @@ export default class Audio extends React.Component {
     const allTime = state.entities[allState.array[0]].du;
     const audio = this.refs.audio;
     const time = audio.currentTime / allTime;
-    if (startTime === 0) { // 如果音乐没有起始标记
-      this.refs.played.style.width = `${time * 100}%`;
+    if (!this.state.current) {
+      this.setState({
+        current: true
+      });
+      audio.currentTime = startTime;
     } else {
-      const difference = audio.currentTime - startTime;
-      const curr = startTime / allTime;
-      this.refs.played.style.width = `${(difference / allTime) * 100}%`;
-      this.refs.cutStart.style.left = `${curr * 100}%`;
-      if (this.refs.control.style.left < this.refs.cutStart.style.left) {
-        audio.currentTime = startTime;
-        this.setState({
-          isPlay: true
-        });
-        audio.play();
+      this.refs.played.style.width = `${((audio.currentTime - startTime) / allTime) * 100}%`;
+      this.refs.control.style.left = `${(audio.currentTime / allTime) * 100}%`;
+      this.refs.played.style.left = `${(startTime / allTime) * 100}%`;
+      if (startTime !== 0) {
+        this.refs.cutStart.style.left = `${(startTime / allTime) * 100}%`;
+        if (parseInt(this.refs.control.style.left) < parseInt(this.refs.cutStart.style.left)) {
+          audio.currentTime = startTime;
+          this.refs.played.style.width = '0%';
+          this.setState({
+            isPlay: true
+          });
+          audio.play();
+        }
+      }
+      if (endTime !== 0) {
+        this.refs.cutEnd.style.left = `${(endTime / allTime) * 100}%`;
+        if (parseInt(this.refs.control.style.left) >= parseInt(this.refs.cutEnd.style.left)) {
+          audio.currentTime = startTime;
+          this.refs.played.style.width = '0%';
+          this.setState({
+            isPlay: true
+          });
+          audio.play();
+        }
       }
     }
-    if (endTime !== 0) {
-      const curr = endTime / allTime;
-      this.refs.cutEnd.style.left = `${curr * 100}%`;
-      if (this.refs.control.style.left >= this.refs.cutEnd.style.left) {
-        audio.currentTime = startTime;
-        this.setState({
-          isPlay: true
-        });
-        audio.play();
-      }
-    }
-    this.refs.control.style.left = `${time * 100}%`;
-    this.refs.played.style.left = `${(startTime / allTime) * 100}%`;
     const totalTime = this.transTime(allTime);
     const playTime = this.transTime(time * allTime);
     onChangeTime(`${playTime}/${totalTime}`);
@@ -153,8 +205,8 @@ export default class Audio extends React.Component {
         <div
           className="player"
           ref="playcontainer"
-          onTouchMove={this.onTouchControlMove}
           onTouchEnd={this.onTouchControlEnd}
+          onTouchMove={this.onTouchControlMove}
         >
           <div className="slider">
             <div className="processor" ref="played" />
@@ -163,15 +215,14 @@ export default class Audio extends React.Component {
               ref="control"
               onTouchStart={this.onTouchControlStart}
             />
-            <img src={cut_start} ref="cutStart" className={this.onShowClassName()} />
-            <img src={cut_end} ref="cutEnd" className={this.onShowClassNameEnd()} />
+            <img src={cut_start} ref="cutStart" className={this.onShowCutStart()} />
+            <img src={cut_end} ref="cutEnd" className={this.onShowCutEnd()} />
           </div>
         </div>
         <audio
           ref="audio"
           src={url}
           autoPlay
-          // preload="auto"
           loop
           onTimeUpdate={this.controls}
         />

@@ -85,9 +85,7 @@ class GraduationWork extends React.Component {
             />
           </div>
         </div>
-        <div className="props_children">
-          {this.showTopBarContents()}
-        </div>
+        {this.showTopBarContents()}
       </div>
     );
   }

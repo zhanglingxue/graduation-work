@@ -1,5 +1,6 @@
 import React from 'react';
-import MusicContent from '../musicContent/musicContent';
+import MyMusicList from '../musicContent/myMusicList';
+import BottomButton from '../musicContent/bottomButton';
 import TipsView from '../musicContent/tips';
 import '../../components/music.css';
 
@@ -151,10 +152,9 @@ export default class MyMusic extends React.Component {
     return null;
   }
   Timer = name => {
-    setTimeout(() => {
+    this.interval = setTimeout(() => {
       this.setState({
-        showNotification: false,
-        buttonName: ''
+        showNotification: false
       });
     }, 1000);
     this.setState({
@@ -179,6 +179,7 @@ export default class MyMusic extends React.Component {
     } else {
       this.setState({
         showDialog: true,
+        showNotification: false,
         buttonName: name
       });
     }
@@ -197,27 +198,35 @@ export default class MyMusic extends React.Component {
   }
   render() {
     const { state } = this.props;
+    const AllHheight = window.screen.availHeight;
+    this.height = AllHheight - 221;
     return (
-      <div>
-        <div className="chance_button">
-          <span className="select_point" onClick={this.onSelectRadio}>
-            <span className="chanceSpan">
-              <span className={this.onShowRadioClassName()} />
+      <div className="props_children">
+        <div className="listContent" style={{ height: this.height }} >
+          <div className="chance_button">
+            <span className="select_point" onClick={this.onSelectRadio}>
+              <span className="chanceSpan">
+                <span className={this.onShowRadioClassName()} />
+              </span>
+              <p>单选</p>
             </span>
-            <p>单选</p>
-          </span>
-          <span className="select_point" onClick={this.onSelectCheck}>
-            <span className="chanceSpan">
-              <span className={this.onShowCheckClassName()} />
+            <span className="select_point" onClick={this.onSelectCheck}>
+              <span className="chanceSpan">
+                <span className={this.onShowCheckClassName()} />
+              </span>
+              <p>多选</p>
             </span>
-            <p>多选</p>
-          </span>
+          </div>
+          <MyMusicList
+            allState={this.state}
+            state={state}
+            onChanceListItem={this.handleChanceListItem}
+            onChangeRandom={this.handleChangeRandom}
+          />
         </div>
-        <MusicContent
+        <BottomButton
           allState={this.state}
           state={state}
-          onChanceListItem={this.handleChanceListItem}
-          onChangeRandom={this.handleChangeRandom}
           onshowTipBox={this.handleShowTipBox}
         />
         <TipsView

@@ -1,5 +1,5 @@
 import React from 'react';
-import DialogView from './Dialog';
+import Dialog from './Dialog';
 import MusicProgress from './musicProgress';
 import Fragment from './fragment';
 import '../../components/music.css';
@@ -55,13 +55,13 @@ export default class Test extends React.Component {
           onCloseDialog();
           return null;
         }
+        return (<Dialog
+          allState={allState}
+          state={state}
+          onCloseDialog={onCloseDialog}
+          onSureDelete={onSureDelete}
+        />);
       }
-      return (<DialogView
-        allState={allState}
-        state={state}
-        onCloseDialog={onCloseDialog}
-        onSureDelete={onSureDelete}
-      />);
     }
     return null;
   }

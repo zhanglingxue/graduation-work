@@ -52,6 +52,7 @@
     "array-callback-return":["off", "nerver"],
     "react/jsx-no-bind":["off", "nerver"],
     "react/no-string-refs":["off", "nerver"],
-    "react/no-unused-state":["off", "nerver"]
+    "react/no-unused-state":["off", "nerver"],
+    "radix":["off", "nerver"]
   }
 }

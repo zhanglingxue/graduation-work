@@ -172,6 +172,13 @@ p,h1,h2,h3{
   float: left;
   margin:9px;
 }
+.listContent{
+  position: relative;
+  top: 135px;
+  margin-bottom: 71px;
+  /* height: 445px; */
+  overflow: auto;
+}
 .img_opac{
   opacity: 0;
 }
@@ -304,6 +311,7 @@ p,h1,h2,h3{
   left:40px;
   right:40px;
   height:150px;
+  font-size:16px;
   background: #fff;
   opacity: 1;
   border-radius: 5px;
@@ -437,6 +445,7 @@ p,h1,h2,h3{
   right: 0;
   z-index:500;
   background: #fff;
+  font-size: 16px;
   height:240px;
   transform: translateY(100%);
 }
@@ -474,12 +483,14 @@ p,h1,h2,h3{
   left: 0;
   right: 0;
   height:40px;
+  font-size:17px;
   text-align: center;
   line-height: 40px;
   background: #e0e0e0;
 }
 .mark_start_first{
   position: fixed;
+  z-index:550;
   bottom:40px;
   left:10%;
   right:10%;
