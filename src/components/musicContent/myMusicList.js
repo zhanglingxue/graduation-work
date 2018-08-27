@@ -63,7 +63,7 @@ export default class MyMsicList extends React.Component {
           ))
         }
         <div className="show_list">
-          <h2>推荐音乐</h2>
+          <h2 className="my_music_list">推荐音乐</h2>
         </div>
         { this.showRandomMusic() }
         {

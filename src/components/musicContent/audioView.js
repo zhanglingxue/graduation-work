@@ -94,7 +94,9 @@ export default class Audio extends React.Component {
     this.setState({
       isMove: false
     });
-    audio.play();
+    if (this.state.isPlay) {
+      audio.play();
+    }
   }
   onTouchControlMove = e => {
     this.moveX = e.changedTouches[0].clientX;

@@ -12,7 +12,7 @@ export default class MyMusic extends React.Component {
     recomCheck: [], // 将推荐音乐med作为判断条件，划分button不同状态
     random: true, // 默认单选页面选中随机音乐
     chanceOver: false, // 多选状态下选第6首的状态为true
-    showDialog: false, // 不同button状态下显示提示框状态
+    showDialog: false, // 弹出框
     showNotification: false, // 提示框
     buttonName: '' // 当前点击button名称
   };

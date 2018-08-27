@@ -85,7 +85,7 @@ p,h1,h2,h3{
   height:50px;
   line-height: 50px;
   font-size: 17px;
-  color:#575151;
+  color:gray;
 }
 .show_list{
   height:50px;
@@ -105,7 +105,7 @@ p,h1,h2,h3{
 }
 .my_music_list{
   float: left;
-  font-size: 1.5em;
+  font-size: 1.8em;
 }
 .bottle{
   float: right;
@@ -161,7 +161,7 @@ p,h1,h2,h3{
   }
 }
 .myMusic_list{
-  font-size: 17px;
+  font-size: 14px;
   height:50px;
   line-height: 50px;
   position: relative;
@@ -176,7 +176,6 @@ p,h1,h2,h3{
   position: relative;
   top: 135px;
   margin-bottom: 71px;
-  /* height: 445px; */
   overflow: auto;
 }
 .img_opac{
@@ -189,7 +188,6 @@ p,h1,h2,h3{
   float: left;
   margin-left:10px;
   width:75%;
-  /* max-width:220px; */
   height:50px;
   overflow: hidden;
   white-space: nowrap;
@@ -215,7 +213,7 @@ p,h1,h2,h3{
   background: #f7f7f7;
   display: flex;
   flex: 5;
-  font-size:16px;
+  font-size:13px;
 }
 .button_div{
   flex: 1;
@@ -278,6 +276,7 @@ p,h1,h2,h3{
   font-size:17px;
   height:45px;
   line-height:45px;
+  color:gray;
 }
 .tab_color{
   color:#ff2064;
