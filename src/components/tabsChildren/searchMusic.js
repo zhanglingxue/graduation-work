@@ -5,10 +5,9 @@ export default class SearchMusic extends React.Component {
   state = {
 
   };
-
   render() {
     return (
-      <div>Search Music</div>
+      <div className="props_children">Search Music</div>
     );
   }
 }

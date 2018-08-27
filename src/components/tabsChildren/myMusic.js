@@ -164,16 +164,12 @@ export default class MyMusic extends React.Component {
   }
   handleShowTipBox = name => {
     const { state } = this.props;
-    if (this.state.array.length === 0) {
-      this.Timer(name);
-    } else if (this.state.checkbox
-      && ((this.state.array.length !== 0 && name !== '删除')
-      || this.state.recomCheck.length !== 0)
-    ) {
-      this.Timer(name);
-    } else if (this.state.radio
-      && ((this.state.array.length !== 0 && state.entities[this.state.array[0]].plp !== undefined && name === '重命名')
-      || (this.state.recomCheck.length !== 0 && name !== '播放'))
+    if (this.state.array.length === 0 ||
+      (this.state.checkbox && ((this.state.array.length !== 0 && name !== '删除')
+      || this.state.recomCheck.length !== 0)) ||
+      (this.state.radio
+        && ((this.state.array.length !== 0 && state.entities[this.state.array[0]].plp !== undefined && name === '重命名')
+        || (this.state.recomCheck.length !== 0 && name !== '播放')))
     ) {
       this.Timer(name);
     } else {

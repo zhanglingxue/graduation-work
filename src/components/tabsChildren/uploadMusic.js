@@ -5,10 +5,9 @@ export default class UpLoadMusic extends React.Component {
   state = {
 
   };
-
   render() {
     return (
-      <div>Upload Music</div>
+      <div className="props_children">Upload Music</div>
     );
   }
 }

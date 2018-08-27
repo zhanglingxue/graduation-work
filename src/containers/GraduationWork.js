@@ -7,7 +7,6 @@ import SearchMusic from '../components/tabsChildren/searchMusic';
 import UploadMusic from '../components/tabsChildren/uploadMusic';
 import TabPane from '../components/tabs/tabPane';
 import '../components/music.css';
-import './GraduationWork.css';
 
 const icon_back = require('../images/return.png');
 const artboard_upload = require('../images/artboard_upload.png');

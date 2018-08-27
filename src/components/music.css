@@ -31,7 +31,9 @@ p,h1,h2,h3{
   background: black;
   color: azure;
   font-size: 18px;
-  
+}
+.props_children{
+  margin-top: 150px;
 }
 .user_name{
   height:50px;
@@ -173,8 +175,8 @@ p,h1,h2,h3{
   margin:9px;
 }
 .listContent{
-  position: relative;
-  top: 135px;
+  /* position: relative;
+  top: 135px; */
   margin-bottom: 71px;
   overflow: auto;
 }

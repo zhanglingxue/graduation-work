@@ -2,6 +2,7 @@ import React from 'react';
 import Dialog from './Dialog';
 import MusicProgress from './musicProgress';
 import Fragment from './fragment';
+import ReName from './reName';
 import '../../components/music.css';
 
 export default class Test extends React.Component {
@@ -12,11 +13,12 @@ export default class Test extends React.Component {
       state,
       allState,
       onCloseDialog,
-      onSureDelete
+      onSureDelete,
+      buttonName
     } = this.props;
     if (allState.showNotification) {
       if (allState.checkbox) {
-        if (allState.buttonName === '删除') {
+        if (buttonName === '删除') {
           if (allState.array.length === 0) {
             return <div className="dialog_class">您还没有选择音乐哦!</div>;
           }
@@ -55,7 +57,15 @@ export default class Test extends React.Component {
           onCloseDialog();
           return null;
         }
-        return (<Dialog
+        if (allState.buttonName === '删除' && allState.array.length !== 0) {
+          return (<Dialog
+            allState={allState}
+            state={state}
+            onCloseDialog={onCloseDialog}
+            onSureDelete={onSureDelete}
+          />);
+        }
+        return (<ReName
           allState={allState}
           state={state}
           onCloseDialog={onCloseDialog}
