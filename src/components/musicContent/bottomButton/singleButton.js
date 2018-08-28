@@ -1,5 +1,5 @@
 import React from 'react';
-import '../music.css';
+import '../../music.css';
 
 export default class SingleButton extends React.Component {
   state = {

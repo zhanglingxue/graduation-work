@@ -1,6 +1,6 @@
 import React from 'react';
-import AudioView from './audioView';
-import '../music.css';
+import AudioView from '../audioView';
+import '../../music.css';
 
 export default class MusicProgress extends React.Component {
   state = {

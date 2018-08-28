@@ -1,13 +1,13 @@
 import React from 'react';
-import AudioView from './audioView';
-import '../music.css';
+import AudioView from '../audioView';
+import '../../music.css';
 
-const mark_start = require('../../images/button_cut_music_start.png');
-const mark_end = require('../../images/button_cut_music_finish.png');
-const mark_start_gray = require('../../images/button_cut_music_start_gray.png');
-const mark_end_gray = require('../../images/button_cut_music_finish_gray.png');
-const clear_gray = require('../../images/button_cut_music_clear_gray.png');
-const clear = require('../../images/button_cut_music_clear.png');
+const mark_start = require('../../../images/button_cut_music_start.png');
+const mark_end = require('../../../images/button_cut_music_finish.png');
+const mark_start_gray = require('../../../images/button_cut_music_start_gray.png');
+const mark_end_gray = require('../../../images/button_cut_music_finish_gray.png');
+const clear_gray = require('../../../images/button_cut_music_clear_gray.png');
+const clear = require('../../../images/button_cut_music_clear.png');
 
 export default class Fragment extends React.Component {
   state = {

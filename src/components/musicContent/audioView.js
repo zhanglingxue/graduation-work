@@ -94,7 +94,7 @@ export default class Audio extends React.Component {
   onShowCutEnd = () => {
     const { state, allState } = this.props;
     if (state.entities[allState.array[0]].emt !== 0) {
-      return 'cut_start';
+      return 'cut_start cut_end';
     }
     return 'cut_start cut_none';
   }

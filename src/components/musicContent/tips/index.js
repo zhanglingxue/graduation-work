@@ -1,9 +1,9 @@
 import React from 'react';
-import Dialog from './Dialog';
+import Dialog from '../Dialog';
 import MusicProgress from './musicProgress';
 import Fragment from './fragment';
 import ReName from './reName';
-import '../../components/music.css';
+import '../../music.css';
 
 export default class Test extends React.Component {
   state = {

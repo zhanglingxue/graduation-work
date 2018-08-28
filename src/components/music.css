@@ -432,14 +432,17 @@ p,h1,h2,h3{
   background: #fff;
   box-shadow: #e0e0e0 0px 0px 8px;
   border-radius: 50%;
+  margin-left:-5px;
   top:-15px;
 }
-
 .cut_start{
   position: absolute;
   width: 10px;
   height:30px;
   top:-15px;
+}
+.cut_end{
+  margin-left:-8px;
 }
 .cut_none{
   display: none;
