@@ -1,5 +1,4 @@
 body{
-  /* position: fixed; */
   margin:15px;
 }
 p,h1,h2,h3{
@@ -76,17 +75,16 @@ p,h1,h2,h3{
   line-height: 50px;
   display: flex;
   color:#575151;
-  flex: 3;
+  /* flex: 3; */
 }
 .chance_router span{
   flex: 1;
   text-align: center;
-  /* margin:0 10px 0 10px; */
 }
 .chance_button{
   height:50px;
   line-height: 50px;
-  font-size: 17px;
+  font-size: 16px;
   color:gray;
 }
 .show_list{
@@ -175,8 +173,6 @@ p,h1,h2,h3{
   margin:9px;
 }
 .listContent{
-  /* position: relative;
-  top: 135px; */
   margin-bottom: 71px;
   overflow: auto;
 }
@@ -275,7 +271,7 @@ p,h1,h2,h3{
   opacity: 0.6;
 }
 .tab_option{
-  font-size:17px;
+  font-size:16px;
   height:45px;
   line-height:45px;
   color:gray;
@@ -294,6 +290,7 @@ p,h1,h2,h3{
   width: 35%;
   margin-left: 35%;
   background: #ff2064;
+  border-radius:5px; 
 }
 
 .backgroundLyaer{

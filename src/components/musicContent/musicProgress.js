@@ -6,7 +6,7 @@ export default class MusicProgress extends React.Component {
   state = {
     Audio: ''
   }
-  changeTime = value => {
+  onChangeTime = value => {
     this.refs.time.innerHTML = value;
   }
   showAudioContent = audio => {
@@ -33,7 +33,7 @@ export default class MusicProgress extends React.Component {
               <AudioView
                 allState={allState}
                 state={state}
-                onChangeTime={this.changeTime}
+                changeTime={this.onChangeTime}
                 callBack={this.showAudioContent}
               />
             </div>

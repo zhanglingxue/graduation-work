@@ -32,7 +32,7 @@ export default class BottomButton extends React.Component {
       <div className="bottom-button">
         {
           this.state.data.map(item => (
-            <div className="button_div" onClick={onshowTipBox.bind(this, item.name)}>
+            <div className="button_div" onClick={onshowTipBox.bind(this, item.name)} key={item.name} >
               <ButtonContent
                 item={item}
                 allState={allState}

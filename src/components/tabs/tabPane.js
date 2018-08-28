@@ -22,13 +22,13 @@ export default class TabPane extends React.Component {
           state.tab === keyValue ?
             <div>
               <div className="tab_option tab_color">
-                <img src={icon_red} />
+                <img src={icon_red} alt="" />
                 {name}
               </div>
               <div className="tab_bottom_red" />
             </div> :
             <div className="tab_option">
-              <img src={icon_gray} />
+              <img src={icon_gray} alt="" />
               {name}
             </div>
         }

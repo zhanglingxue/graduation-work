@@ -10,9 +10,9 @@ export default class MyMsicList extends React.Component {
     const { allState } = this.props;
     if (allState.radio) {
       if (allState.array.length !== 0 && idx === allState.array[0]) {
-        return <img src={iconMark} className="img_opac_show" />;
+        return <img src={iconMark} className="img_opac_show" alt="" />;
       }
-      return <img src={iconMark} className="img_opac" />;
+      return <img src={iconMark} className="img_opac" alt="" />;
     }
     const index = allState.array.indexOf(idx);
     if (index === -1) {
@@ -23,9 +23,9 @@ export default class MyMsicList extends React.Component {
   onShowContentRandom = () => {
     const { allState } = this.props;
     if (allState.radio && allState.random) {
-      return <img src={iconMark} className="img_opac_show" />;
+      return <img src={iconMark} className="img_opac_show" alt="" />;
     }
-    return <img src={iconMark} className="img_opac" />;
+    return <img src={iconMark} className="img_opac" alt="" />;
   }
   showRandomMusic = () => {
     const { allState, onChangeRandom } = this.props;
@@ -54,7 +54,7 @@ export default class MyMsicList extends React.Component {
         </div>
         {
           my_music.map(idx => (
-            <div className="myMusic_list" onClick={onChanceListItem.bind(this, idx)}>
+            <div className="myMusic_list" onClick={onChanceListItem.bind(this, idx)} key={idx} >
               <div className="selectStyle">
                 {this.onShowContent(idx)}
               </div>
@@ -68,7 +68,7 @@ export default class MyMsicList extends React.Component {
         { this.showRandomMusic() }
         {
           recomment.map(idx => (
-            <div className="myMusic_list" onClick={onChanceListItem.bind(this, idx)}>
+            <div className="myMusic_list" onClick={onChanceListItem.bind(this, idx)} key={idx} >
               <div className="selectStyle">
                 {this.onShowContent(idx)}
               </div>

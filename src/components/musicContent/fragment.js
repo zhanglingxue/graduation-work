@@ -49,6 +49,9 @@ export default class Fragment extends React.Component {
     }
     return 'cut_none';
   }
+  onChangeTime = value => {
+    this.refs.time.innerHTML = value;
+  }
   transTime = value => {
     let transTime = '';
     const h = parseInt(value / 3600);
@@ -67,14 +70,11 @@ export default class Fragment extends React.Component {
     const s = value.split(':');
     let i = 0;
     for (; i < s.length - 1; i++) {
-      formatTime += s[i].length == 1 ? (`0${s[i]}`) : s[i];
+      formatTime += s[i].length === 1 ? (`0${s[i]}`) : s[i];
       formatTime += ':';
     }
-    formatTime += s[i].length == 1 ? (`0${s[i]}`) : s[i];
+    formatTime += s[i].length === 1 ? (`0${s[i]}`) : s[i];
     return formatTime;
-  }
-  changeTime = value => {
-    this.refs.time.innerHTML = value;
   }
   showAudioContent = audio => {
     this.setState({
@@ -98,21 +98,21 @@ export default class Fragment extends React.Component {
             <div className="mark">
               <div>
                 { entities[music].bmt === 0 ?
-                  <img src={mark_start} onClick={this.onMarkPointStart} /> :
-                  <img src={mark_start_gray} /> }
+                  <img src={mark_start} onClick={this.onMarkPointStart} alt="" /> :
+                  <img src={mark_start_gray} alt="" /> }
                 <p>标记起点</p>
                 <p>{this.startTime}</p>
               </div>
               <div>
                 { entities[music].bmt === 0 && entities[music].emt === 0 ?
-                  <img src={clear_gray} onClick={this.onClearMark} /> :
-                  <img src={clear} onClick={this.onClearMark} /> }
+                  <img src={clear_gray} onClick={this.onClearMark} alt="" /> :
+                  <img src={clear} onClick={this.onClearMark} alt="" /> }
                 <p>清除</p>
               </div>
               <div>
                 { entities[music].emt === 0 ?
-                  <img src={mark_end} onClick={this.onMarkPointEnd} /> :
-                  <img src={mark_end_gray} /> }
+                  <img src={mark_end} onClick={this.onMarkPointEnd} alt="" /> :
+                  <img src={mark_end_gray} alt="" /> }
                 <p>标记终点</p>
                 <p>
                   {
@@ -124,7 +124,7 @@ export default class Fragment extends React.Component {
             <AudioView
               allState={allState}
               state={state}
-              onChangeTime={this.changeTime}
+              changeTime={this.onChangeTime}
               callBack={this.showAudioContent}
             />
             <div className="musicTime" ref="time">/</div>

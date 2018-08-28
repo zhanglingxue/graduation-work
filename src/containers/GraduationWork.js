@@ -47,7 +47,7 @@ class GraduationWork extends React.Component {
           <div className="top_bar_name">小年糕+</div>
           <div className="user_name">
             <span className="film_making" onClick={this.goBack}>
-              <span><img src={icon_back} /></span>
+              <span><img src={icon_back} alt="" /></span>
               <span><p>影集制作</p></span>
             </span>
             <span className="myName">

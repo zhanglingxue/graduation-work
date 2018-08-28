@@ -18,14 +18,14 @@ export default class Dialog extends React.Component {
   }
 
   handleDeleteMoreMusic = allState => {
-    this.state = {
+    this.data = {
       value: `确定删除这${allState.array.length}首音乐吗？`,
       onCancel: '取消',
       onOk: '确定'
     };
   }
   handleDeleteOneMusic = (allState, state) => {
-    this.state = {
+    this.data = {
       value: `确定删除${state.entities[allState.array[0]].name}这首音乐吗？`,
       onCancel: '取消',
       onOk: '确定'
@@ -37,7 +37,7 @@ export default class Dialog extends React.Component {
     return (
       <div>
         {this.onShowDialogContent()}
-        <DialogView state={this.state} onCancel={onCloseDialog} onDelete={this.onDeleteMusicClick} />
+        <DialogView state={this.data} onCancel={onCloseDialog} onDelete={this.onDeleteMusicClick} />
       </div>
     );
   }
