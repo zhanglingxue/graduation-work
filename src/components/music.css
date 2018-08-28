@@ -304,10 +304,10 @@ p,h1,h2,h3{
 }
 .delete_dialog{
   position: fixed;
-  bottom: 200px;
+  bottom: 38%;
   text-align: center;
-  left:40px;
-  right:40px;
+  left:10%;
+  right:10%;
   height:150px;
   font-size:16px;
   background: #fff;
@@ -352,9 +352,18 @@ p,h1,h2,h3{
 .cancel{
   border-right: 1px solid #e0e0e0;
 }
+.sure{
+  color:#00a8b5;
+}
+.inputNewName{
+  font-size:14px;
+}
 .music_input{
-  width: 80%;
+  width: 90%;
   height:24px;
+  text-align: center;
+  font-size:15px;
+  border: 1px solid #e0e0e0;
 }
 .progressBox{
   position: fixed;
@@ -379,10 +388,9 @@ p,h1,h2,h3{
   margin-right: 20px;
 }
 .musicName{
-  font-size: 18px;
+  font-size: 16px;
   text-align: center;
-  height:30px;
-  margin-bottom: 5px;
+  height:35px;
   line-height:30px;
 }
 .img_button{
@@ -393,15 +401,15 @@ p,h1,h2,h3{
 .musicName_img{
   width: 15px;
   height: 15px;
-  margin-top:11px;
+  padding: 10px;
   float: right;
 }
 .player{
   width: 73%;
-  height: 34px;
+  height: 35px;
   float: left;
   margin-left:2%;
-  line-height:34px;
+  line-height:32px;
 }
 .slider{
   width: 100%;
@@ -443,7 +451,7 @@ p,h1,h2,h3{
   right: 0;
   z-index:500;
   background: #fff;
-  font-size: 16px;
+  font-size: 15px;
   height:240px;
   transform: translateY(100%);
 }
@@ -464,6 +472,7 @@ p,h1,h2,h3{
   display: block;
   margin: auto;
   margin-top:10px;
+  margin-bottom: 10px;
   width: 50px;
   height:50px;
   background: #e0e0e0;

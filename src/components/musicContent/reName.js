@@ -13,18 +13,20 @@ export default class ReName extends React.Component {
   onSubmitMusicName = () => {
     const { allState, state, onCloseDialog } = this.props;
     const id = allState.array[0];
-    state.graduactions.fetchSubmitMusicName(id, this.state.input_value);
+    if (this.state.input_value !== '') {
+      state.graduactions.fetchSubmitMusicName(id, this.state.input_value);
+    }
     onCloseDialog();
   }
   render() {
     const { onCloseDialog, allState, state } = this.props;
     return (
       <div>
-        <div className="backgroundLyaer" onClick={onCloseDialog} />
+        <div className="backgroundLyaer" />
         <div className="delete_dialog">
           <div className="delete_content">
             <span>
-              <span>请输入新的音乐名称</span>
+              <span className="inputNewName">请输入新的音乐名称</span>
               <span>
                 <input
                   type="text"
@@ -37,7 +39,7 @@ export default class ReName extends React.Component {
           </div>
           <div className="dialog_chance">
             <span className="cancel" onClick={onCloseDialog}>取消</span>
-            <span onClick={this.onSubmitMusicName}>确定</span>
+            <span className="sure" onClick={this.onSubmitMusicName}>确定</span>
           </div>
         </div>
       </div>

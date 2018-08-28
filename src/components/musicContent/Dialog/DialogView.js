@@ -17,7 +17,7 @@ export default class DialogView extends React.Component {
           </div>
           <div className="dialog_chance">
             <span className="cancel" onClick={onCancel}>{state.onCancel}</span>
-            <span onClick={onDelete}>{state.onOk}</span>
+            <span className="sure" onClick={onDelete}>{state.onOk}</span>
           </div>
         </div>
       </div>
